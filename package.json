@@ -1,0 +1,34 @@
+{
+  "name": "canvas-ui-wl",
+  "version": "1.0.0",
+  "description": "Typescript UI library which uses HTML canvases - Wonderland Engine integration",
+  "main": "lib/index.js",
+  "module": "lib/index.esm.js",
+  "scripts": {
+    "lint": "eslint . --ext .js",
+    "build": "esbuild src/index.js --bundle --minify --sourcemap --target=es6 --external:canvas-ui --external:gl-matrix --outfile=lib/index.esm.js",
+    "docs": "jsdoc2md ./src/core/WLRoot.js ./src/core/WLVirtualKeyboardRoot.js > docs.md"
+  },
+  "files": [
+    "lib",
+    "package.json"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "canvas-ui": "github:playkostudios/canvas-ui#dev",
+    "eslint": "^7.30.0",
+    "gl-matrix": "^3.3.0",
+    "jsdoc": "^3.6.7",
+    "jsdoc-to-markdown": "^7.0.1"
+  },
+  "peerDependencies": {
+    "canvas-ui": "dev",
+    "gl-matrix": "3.x"
+  },
+  "dependencies": {
+    "esbuild": "^0.12.15",
+    "remove": "^0.1.5"
+  }
+}
