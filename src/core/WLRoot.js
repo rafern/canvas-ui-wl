@@ -12,12 +12,13 @@ let canvasUIKeyboardDriver = null;
 let canvasUIPointerIDs = null;
 
 /**
- * @module canvas-ui-wl
+ * @module WLRoot
  */
 
 /**
  * A canvas-ui Root which automatically manages a mesh and input. For an example
  * on how to use this in a component, see example-components/test-ui-root.js
+ * @alias module:WLRoot
  */
 export class WLRoot extends Root {
     /**

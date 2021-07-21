@@ -2,7 +2,7 @@ import { VirtualKeyboard, defaultVirtualKeyboardTemplate, Theme, Margin } from '
 import { WLRoot } from './WLRoot';
 
 /**
- * @module canvas-ui-wl
+ * @module WLVirtualKeyboardRoot
  */
 
 /**
@@ -10,6 +10,7 @@ import { WLRoot } from './WLRoot';
  * canvas-ui. Can also be automatically hidden when there is no keyboard focus
  * by callid updateVisibility before calling update. This doesn't need to be
  * directly used, the virtual-keyboard-ui-root component can be used instead.
+ * @alias module:WLVirtualKeyboardRoot
  */
 export class WLVirtualKeyboardRoot extends WLRoot {
     /**
