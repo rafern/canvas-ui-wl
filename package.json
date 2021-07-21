@@ -14,8 +14,9 @@
     "package.json"
   ],
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Playko",
+  "license": "UNLICENSED",
+  "private": true,
   "devDependencies": {
     "canvas-ui": "github:playkostudios/canvas-ui#2.0.0",
     "eslint": "^7.30.0",
