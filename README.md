@@ -3,7 +3,14 @@
 Wonderland Engine integration for the
 [canvas-ui](https://github.com/playkostudios/canvas-ui) Typescript UI library.
 
-Documentation is available in the [docs.md file](docs.md).
+Documentation is available in the [docs.md file](docs.md). Note that this
+project uses JSDoc to generate documentation and there is a bug with default
+parameter values
+[where null is not shown](https://github.com/jsdoc2md/jsdoc-to-markdown/issues/170#issuecomment-452292087),
+so every time there is a default value that looks like an empty string in the
+documentation, its a null value:
+
+[Example of the bug](jsdoc_bug.png)
 
 Documentation for canvas-ui is available in the
 [canvas-ui repository](https://github.com/playkostudios/canvas-ui).
