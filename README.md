@@ -10,7 +10,7 @@ parameter values
 so every time there is a default value that looks like an empty string in the
 documentation, its a null value:
 
-[Example of the bug](jsdoc_bug.png)
+![Example of the bug](jsdoc_bug.png)
 
 Documentation for canvas-ui is available in the
 [canvas-ui repository](https://github.com/playkostudios/canvas-ui).
