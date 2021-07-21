@@ -13,7 +13,7 @@
 
 * [WLRoot](#module_WLRoot)
     * [.exports.WLRoot](#exp_module_WLRoot--exports.WLRoot) ⏏
-        * [new exports.WLRoot(wlObject, material, child, theme, unitsPerPixel, registerPointerDriver, registerKeyboardDriver)](#new_module_WLRoot--exports.WLRoot_new)
+        * [new exports.WLRoot(wlObject, material, child, [theme], [unitsPerPixel], [registerPointerDriver], [registerKeyboardDriver])](#new_module_WLRoot--exports.WLRoot_new)
         * _instance_
             * [.update()](#module_WLRoot--exports.WLRoot.WLRoot+update)
         * _static_
@@ -31,7 +31,7 @@ on how to use this in a component, see example-components/test-ui-root.js
 **Kind**: static class of [<code>WLRoot</code>](#module_WLRoot)  
 <a name="new_module_WLRoot--exports.WLRoot_new"></a>
 
-#### new exports.WLRoot(wlObject, material, child, theme, unitsPerPixel, registerPointerDriver, registerKeyboardDriver)
+#### new exports.WLRoot(wlObject, material, child, [theme], [unitsPerPixel], [registerPointerDriver], [registerKeyboardDriver])
 Create a new WLRoot.
 
 
@@ -40,10 +40,10 @@ Create a new WLRoot.
 | wlObject | <code>Object</code> |  | The object where the mesh will be added |
 | material | <code>Material</code> |  | The material to use for this root's mesh. The material will be cloned |
 | child | <code>Widget</code> |  | The root's child widget |
-| theme | <code>Theme</code> |  | The root's theme. If none is supplied, the default theme is used |
-| unitsPerPixel | <code>number</code> | <code>0.01</code> | The amount of world units per canvas pixel. Determines the pixel density of the mesh |
-| registerPointerDriver | <code>boolean</code> | <code>true</code> | Register the default pointer driver to this root? |
-| registerKeyboardDriver | <code>boolean</code> | <code>true</code> | Register the default keyboard driver to this root? |
+| [theme] | <code>Theme</code> | <code>new Theme()</code> | The root's theme. If none is supplied, the default theme is used |
+| [unitsPerPixel] | <code>number</code> | <code>0.01</code> | The amount of world units per canvas pixel. Determines the pixel density of the mesh |
+| [registerPointerDriver] | <code>boolean</code> | <code>true</code> | Register the default pointer driver to this root? |
+| [registerKeyboardDriver] | <code>boolean</code> | <code>true</code> | Register the default keyboard driver to this root? |
 
 <a name="module_WLRoot--exports.WLRoot.WLRoot+update"></a>
 
@@ -93,7 +93,7 @@ PointerDriver.
 
 * [WLVirtualKeyboardRoot](#module_WLVirtualKeyboardRoot)
     * [.exports.WLVirtualKeyboardRoot](#exp_module_WLVirtualKeyboardRoot--exports.WLVirtualKeyboardRoot) ⏏
-        * [new exports.WLVirtualKeyboardRoot(wlObject, material, keyboardTemplate, keyboardDriver, theme, unitsPerPixel, registerPointerDriver)](#new_module_WLVirtualKeyboardRoot--exports.WLVirtualKeyboardRoot_new)
+        * [new exports.WLVirtualKeyboardRoot(wlObject, material, [keyboardTemplate], [keyboardDriver], [theme], [unitsPerPixel], [registerPointerDriver])](#new_module_WLVirtualKeyboardRoot--exports.WLVirtualKeyboardRoot_new)
         * [.updateVisibility()](#module_WLVirtualKeyboardRoot--exports.WLVirtualKeyboardRoot.WLVirtualKeyboardRoot+updateVisibility)
 
 <a name="exp_module_WLVirtualKeyboardRoot--exports.WLVirtualKeyboardRoot"></a>
@@ -107,7 +107,7 @@ directly used, the virtual-keyboard-ui-root component can be used instead.
 **Kind**: static class of [<code>WLVirtualKeyboardRoot</code>](#module_WLVirtualKeyboardRoot)  
 <a name="new_module_WLVirtualKeyboardRoot--exports.WLVirtualKeyboardRoot_new"></a>
 
-#### new exports.WLVirtualKeyboardRoot(wlObject, material, keyboardTemplate, keyboardDriver, theme, unitsPerPixel, registerPointerDriver)
+#### new exports.WLVirtualKeyboardRoot(wlObject, material, [keyboardTemplate], [keyboardDriver], [theme], [unitsPerPixel], [registerPointerDriver])
 Create a new WLVirtualKeyboardRoot.
 
 
@@ -115,11 +115,11 @@ Create a new WLVirtualKeyboardRoot.
 | --- | --- | --- | --- |
 | wlObject | <code>Object</code> |  | The object where the mesh will be added |
 | material | <code>Material</code> |  | The material to use for this root's mesh. The material will be cloned |
-| keyboardTemplate | <code>VirtualKeyboardTemplate</code> |  | The virtual keyboard's layout template. Uses the US QWERTY layout by default. |
-| keyboardDriver | <code>KeyboardDriver</code> \| <code>null</code> | <code></code> | The KeyboardDriver to dispatch key events to. If null (default), WLRoot.keyboardDriver is used. |
-| theme | <code>Theme</code> |  | The root's theme. If none is supplied, the default theme is used |
-| unitsPerPixel | <code>number</code> | <code>0.01</code> | The amount of world units per canvas pixel. Determines the pixel density of the mesh |
-| registerPointerDriver | <code>boolean</code> | <code>true</code> | Register the default pointer driver to this root? |
+| [keyboardTemplate] | <code>VirtualKeyboardTemplate</code> | <code>defaultVirtualKeyboardTemplate</code> | The virtual keyboard's layout template. Uses the US QWERTY layout by default. |
+| [keyboardDriver] | <code>KeyboardDriver</code> \| <code>null</code> | <code></code> | The KeyboardDriver to dispatch key events to. If null (default), WLRoot.keyboardDriver is used. |
+| [theme] | <code>Theme</code> | <code>new Theme()</code> | The root's theme. If none is supplied, the default theme is used |
+| [unitsPerPixel] | <code>number</code> | <code>0.01</code> | The amount of world units per canvas pixel. Determines the pixel density of the mesh |
+| [registerPointerDriver] | <code>boolean</code> | <code>true</code> | Register the default pointer driver to this root? |
 
 <a name="module_WLVirtualKeyboardRoot--exports.WLVirtualKeyboardRoot.WLVirtualKeyboardRoot+updateVisibility"></a>
 

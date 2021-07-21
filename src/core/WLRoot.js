@@ -80,13 +80,13 @@ export class WLRoot extends Root {
 
     /**
      * Create a new WLRoot.
-     * @param wlObject {Object} The object where the mesh will be added
-     * @param material {Material} The material to use for this root's mesh. The material will be cloned
-     * @param child {Widget} The root's child widget
-     * @param theme {Theme} The root's theme. If none is supplied, the default theme is used
-     * @param unitsPerPixel {number} The amount of world units per canvas pixel. Determines the pixel density of the mesh
-     * @param registerPointerDriver {boolean} Register the default pointer driver to this root?
-     * @param registerKeyboardDriver {boolean} Register the default keyboard driver to this root?
+     * @param {Object} wlObject The object where the mesh will be added
+     * @param {Material} material The material to use for this root's mesh. The material will be cloned
+     * @param {Widget} child The root's child widget
+     * @param {Theme} [theme=new Theme()] The root's theme. If none is supplied, the default theme is used
+     * @param {number} [unitsPerPixel=0.01] The amount of world units per canvas pixel. Determines the pixel density of the mesh
+     * @param {boolean} [registerPointerDriver=true] Register the default pointer driver to this root?
+     * @param {boolean} [registerKeyboardDriver=true] Register the default keyboard driver to this root?
      * @constructor
      */
     constructor(wlObject, material, child, theme = new Theme(), unitsPerPixel = 0.01, registerPointerDriver = true, registerKeyboardDriver = true) {
