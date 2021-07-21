@@ -17,14 +17,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "canvas-ui": "github:playkostudios/canvas-ui#dev",
+    "canvas-ui": "github:playkostudios/canvas-ui#2.0.0",
     "eslint": "^7.30.0",
     "gl-matrix": "^3.3.0",
     "jsdoc": "^3.6.7",
     "jsdoc-to-markdown": "^7.0.1"
   },
   "peerDependencies": {
-    "canvas-ui": "dev",
+    "canvas-ui": "2.x",
     "gl-matrix": "3.x"
   },
   "dependencies": {
