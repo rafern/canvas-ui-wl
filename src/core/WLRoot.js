@@ -80,16 +80,17 @@ export class WLRoot extends Root {
 
     /**
      * Create a new WLRoot.
-     * @param {Object} wlObject The object where the mesh will be added
-     * @param {Material} material The material to use for this root's mesh. The material will be cloned
-     * @param {Widget} child The root's child widget
-     * @param {Theme} [theme=new Theme()] The root's theme. If none is supplied, the default theme is used
-     * @param {number} [unitsPerPixel=0.01] The amount of world units per canvas pixel. Determines the pixel density of the mesh
-     * @param {boolean} [registerPointerDriver=true] Register the default pointer driver to this root?
+     * @param {Object} wlObject The object where the mesh will be added.
+     * @param {Material} material The material to use for this root's mesh. The material will be cloned.
+     * @param {Widget} child The root's child widget.
+     * @param {Theme} [theme=new Theme()] The root's theme. If none is supplied, the default theme is used.
+     * @param {number} [unitsPerPixel=0.01] The amount of world units per canvas pixel. Determines the pixel density of the mesh.
+     * @param {number | null} [collisionGroup=1] The collision group that this root's collider will belong to. If null, collider and cursor-target will not be added.
+     * @param {boolean} [registerPointerDriver=true] Register the default pointer driver to this root? If collisionGroup is null, this is forced to false.
      * @param {boolean} [registerKeyboardDriver=true] Register the default keyboard driver to this root?
      * @constructor
      */
-    constructor(wlObject, material, child, theme = new Theme(), unitsPerPixel = 0.01, registerPointerDriver = true, registerKeyboardDriver = true) {
+    constructor(wlObject, material, child, theme = new Theme(), unitsPerPixel = 0.01, collisionGroup = 1, registerPointerDriver = true, registerKeyboardDriver = true) {
         super(child, style => { WL.canvas.style.cursor = style }, theme);
         this.unitsPerPixel = unitsPerPixel;
 
@@ -99,7 +100,7 @@ export class WLRoot extends Root {
         this.meshObject.active = false;
 
         // Setup drivers
-        if(registerPointerDriver)
+        if(collisionGroup !== null && registerPointerDriver)
             this.registerDriver(WLRoot.pointerDriver);
         if(registerKeyboardDriver)
             this.registerDriver(WLRoot.keyboardDriver);
@@ -115,48 +116,54 @@ export class WLRoot extends Root {
         this._setupMesh(1, 0);
 
         // Setup mouse pointer input
-        this.collision = this.meshObject.addComponent('collision', {
-            collider: WL.Collider.Box,
-            extents: [1, 1, 0.01],
-            group: 0b00000010, // group 1
-        });
-        const target = this.meshObject.addComponent('cursor-target');
-        const cursorPos = new Float32Array(3);
-        const pos = new Float32Array(3);
-        const getCursorPos = cursor => {
-            cursorPos.set(cursor.rayHit.locations[0]);
-            this.meshObject.getTranslationWorld(pos);
-            vec3.sub(cursorPos, cursorPos, pos);
-            vec3.div(cursorPos, cursorPos, this.meshObject.scalingLocal);
+        if(collisionGroup !== null) {
+            this.collision = this.meshObject.addComponent('collision', {
+                collider: WL.Collider.Box,
+                extents: [1, 1, 0.01],
+                group: 1 << collisionGroup,
+            });
 
-            return [
-                Math.min(Math.max((cursorPos[0] + 1) / 2, 0), 1),
-                Math.min(Math.max(1 - ((cursorPos[1] + 1) / 2), 0), 1),
-            ];
-        }
+            const target = this.meshObject.addComponent('cursor-target');
 
-        if(registerPointerDriver) {
-            target.addUnHoverFunction((_, cursor) => {
-                WLRoot.pointerDriver.leavePointer(
-                    this, WLRoot.getPointerID(cursor)
-                );
-            });
-            target.addCursorMoveFunction((_, cursor) => {
-                WLRoot.pointerDriver.movePointer(
-                    this, WLRoot.getPointerID(cursor), ...getCursorPos(cursor)
-                );
-            });
-            target.addCursorDownFunction((_, cursor) => {
-                WLRoot.pointerDriver.movePointer(
-                    this, WLRoot.getPointerID(cursor), ...getCursorPos(cursor), true
-                );
-            });
-            target.addCursorUpFunction((_, cursor) => {
-                WLRoot.pointerDriver.movePointer(
-                    this, WLRoot.getPointerID(cursor), ...getCursorPos(cursor), false
-                );
-            });
+            const cursorPos = new Float32Array(3);
+            const pos = new Float32Array(3);
+            const getCursorPos = cursor => {
+                cursorPos.set(cursor.rayHit.locations[0]);
+                this.meshObject.getTranslationWorld(pos);
+                vec3.sub(cursorPos, cursorPos, pos);
+                vec3.div(cursorPos, cursorPos, this.meshObject.scalingLocal);
+
+                return [
+                    Math.min(Math.max((cursorPos[0] + 1) / 2, 0), 1),
+                    Math.min(Math.max(1 - ((cursorPos[1] + 1) / 2), 0), 1),
+                ];
+            }
+
+            if(registerPointerDriver) {
+                target.addUnHoverFunction((_, cursor) => {
+                    WLRoot.pointerDriver.leavePointer(
+                        this, WLRoot.getPointerID(cursor)
+                    );
+                });
+                target.addCursorMoveFunction((_, cursor) => {
+                    WLRoot.pointerDriver.movePointer(
+                        this, WLRoot.getPointerID(cursor), ...getCursorPos(cursor)
+                    );
+                });
+                target.addCursorDownFunction((_, cursor) => {
+                    WLRoot.pointerDriver.movePointer(
+                        this, WLRoot.getPointerID(cursor), ...getCursorPos(cursor), true
+                    );
+                });
+                target.addCursorUpFunction((_, cursor) => {
+                    WLRoot.pointerDriver.movePointer(
+                        this, WLRoot.getPointerID(cursor), ...getCursorPos(cursor), false
+                    );
+                });
+            }
         }
+        else
+            this.collision = null;
 
         this.valid = true;
     }
@@ -188,11 +195,14 @@ export class WLRoot extends Root {
                 this.unitsPerPixel * height,
                 0.01,
             ]);
-            this.collision.extents = [
-                this.meshObject.scalingLocal[0],
-                this.meshObject.scalingLocal[1],
-                0.01,
-            ];
+
+            if(this.collision !== null) {
+                this.collision.extents = [
+                    this.meshObject.scalingLocal[0],
+                    this.meshObject.scalingLocal[1],
+                    0.01,
+                ];
+            }
 
             // XXX FIXME for now, use the workaround (setupMesh)
             /*const vertexData = this.mesh.mesh.vertexData;
