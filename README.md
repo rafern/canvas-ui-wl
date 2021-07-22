@@ -34,5 +34,6 @@ The implementation can be found in
 
 ## Miscelaneous
 
-A component which disables given objects if the keyboard and/or mouse are in use
-in a UI root is also provided. The component is `canvas-ui-input-guard`
+A component which disables a component of 2 given objects if the keyboard and/or
+mouse are in use in a UI root is also provided. The component is named
+`canvas-ui-input-guard`.
