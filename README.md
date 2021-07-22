@@ -31,3 +31,8 @@ Example usage can be found in
 A default virtual keyboard component, `virtual-keyboard-ui-root`, is supplied.
 The implementation can be found in
 [src/components/virtual-keyboard-ui-root.js](https://github.com/playkostudios/canvas-ui-wl/blob/master/src/components/virtual-keyboard-ui-root.js).
+
+## Miscelaneous
+
+A component which disables given objects if the keyboard and/or mouse are in use
+in a UI root is also provided. The component is `canvas-ui-input-guard`
