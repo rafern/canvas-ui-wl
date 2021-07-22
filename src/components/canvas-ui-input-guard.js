@@ -4,11 +4,11 @@ import { WLRoot } from '../core/WLRoot';
 
 WL.registerComponent('canvas-ui-input-guard', {
     /** (optional) Name of component to disable if keyboard is in use */
-    keyboardComponentName: {type: WL.Type.String, default: null},
+    keyboardComponentName: {type: WL.Type.String, default: ''},
     /** (optional) Object containing component to disable if keyboard is in use. Required if keyboardComponentName is set, else, ignored */
     keyboardObject: {type: WL.Type.Object, default: null},
     /** (optional) Name of component to disable if pointer is hovering a UI root is in use */
-    pointerComponentName: {type: WL.Type.String, default: null},
+    pointerComponentName: {type: WL.Type.String, default: ''},
     /** (optional) Object containing component to disable if pointer is hovering a UI root. Required if pointerComponentName is set, else, ignored */
     pointerObject: {type: WL.Type.Object, default: null},
     /** (optional) Object which has a cursor component. Required if pointerObject is set, else, ignored */
@@ -20,7 +20,7 @@ WL.registerComponent('canvas-ui-input-guard', {
         this.keyboardComponent = null;
     },
     start() {
-        if(this.keyboardComponentName !== null) {
+        if(this.keyboardComponentName !== '') {
             if(this.keyboardObject !== null) {
                 const keyboardComponent = this.keyboardObject.getComponent(this.keyboardComponentName);
                 if(keyboardComponent === null)
@@ -32,7 +32,7 @@ WL.registerComponent('canvas-ui-input-guard', {
                 console.warn('keyboardComponentName set in canvas-ui-keyboard-guard, but keyboardObject was not');
         }
 
-        if(this.pointerComponentName !== null) {
+        if(this.pointerComponentName !== '') {
             if(this.pointerObject !== null) {
                 const pointerComponent = this.pointerObject.getComponent(this.pointerComponentName);
                 if(pointerComponent === null) {
