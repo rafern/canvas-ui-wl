@@ -58,21 +58,21 @@ WL.registerComponent('canvas-ui-input-guard', {
 
     },
     update(_dt) {
-        if(this.keyboardObject !== null) {
+        if(this.keyboardComponent !== null) {
             const enable = (WLRoot.keyboardDriver.getFocusedRoot() === null);
-            this.keyboardObject.active = enable;
+            this.keyboardComponent.active = enable;
         }
 
         if(this.pointer !== null) {
             const enable = (WLRoot.pointerDriver.getPointerHint(this.pointer) === PointerHint.None);
-            this.pointerObject.active = enable;
+            this.pointerComponent.active = enable;
         }
     },
     onDeactivate() {
-        if(this.keyboardObject !== null)
-            this.keyboardObject.active = true;
+        if(this.keyboardComponent !== null)
+            this.keyboardComponent.active = true;
 
-        if(this.pointerObject !== null)
-            this.pointerObject.active = true;
+        if(this.pointerComponent !== null)
+            this.pointerComponent.active = true;
     },
 });
