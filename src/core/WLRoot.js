@@ -145,17 +145,17 @@ export class WLRoot extends Root {
                         this, WLRoot.getPointerID(cursor)
                     );
                 });
-                target.addCursorMoveFunction((_, cursor) => {
+                target.addMoveFunction((_, cursor) => {
                     WLRoot.pointerDriver.movePointer(
                         this, WLRoot.getPointerID(cursor), ...getCursorPos(cursor)
                     );
                 });
-                target.addCursorDownFunction((_, cursor) => {
+                target.addDownFunction((_, cursor) => {
                     WLRoot.pointerDriver.movePointer(
                         this, WLRoot.getPointerID(cursor), ...getCursorPos(cursor), true
                     );
                 });
-                target.addCursorUpFunction((_, cursor) => {
+                target.addUpFunction((_, cursor) => {
                     WLRoot.pointerDriver.movePointer(
                         this, WLRoot.getPointerID(cursor), ...getCursorPos(cursor), false
                     );
