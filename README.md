@@ -12,7 +12,7 @@ Documentation for canvas-ui is available in the
 
 1. Install the canvas-ui NPM package: `npm install --save-dev @rafern/canvas-ui`
 2. Install this NPM package: `npm install --save-dev @rafern/canvas-ui-wl`
-3. `require` `canvas-ui` and `canvas-ui-wl` in your bundle script
+3. `require` `@rafern/canvas-ui` and `@rafern/canvas-ui-wl` in your bundle script
 4. Create a new component for your UI root ([see examples section](#Examples))
 5. Set the material to use for your UI root component to a textured material. If you want a semi-transparent background, create a new pipeline with alpha blending enabled
 
@@ -42,7 +42,7 @@ currently being developed at.
 This project is licensed under the MIT license (see the LICENSE file)
 
 This project uses the following open-source projects:
-- [canvas-ui](https://github.com/rafern/canvas-ui) licensed under the MIT license
+- [@rafern/canvas-ui](https://github.com/rafern/canvas-ui) licensed under the MIT license
 - [esbuild](https://github.com/evanw/esbuild) licensed under the MIT license
 - [eslint](https://github.com/eslint/eslint) licensed under the MIT license
 - [gl-matrix](https://github.com/toji/gl-matrix) licensed under the MIT license
