@@ -26,7 +26,7 @@
     "jsdoc": "^3.6.7"
   },
   "peerDependencies": {
-    "canvas-ui": "3.x",
+    "@rafern/canvas-ui": "3.x",
     "gl-matrix": "3.x"
   },
   "dependencies": {
