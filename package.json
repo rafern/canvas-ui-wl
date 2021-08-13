@@ -1,35 +1,35 @@
 {
-  "name": "canvas-ui-wl",
-  "version": "1.1.1",
-  "description": "Typescript UI library which uses HTML canvases - Wonderland Engine integration",
+  "name": "@rafern/canvas-ui-wl",
+  "version": "1.1.2",
+  "description": "A Typescript UI library which uses HTML canvases - Wonderland Engine integration",
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
   "scripts": {
     "lint": "eslint . --ext .js",
     "build": "esbuild src/index.js --bundle --minify --sourcemap --target=es6 --format=esm --external:canvas-ui --external:gl-matrix --outfile=lib/index.esm.js",
-    "docs": "jsdoc2md ./src/core/WLRoot.js ./src/core/WLVirtualKeyboardRoot.js > docs.md"
+    "docs": "jsdoc -c ./.jsdoc.conf.json"
   },
   "files": [
     "lib",
     "package.json"
   ],
   "keywords": [],
-  "author": "Playko",
-  "license": "UNLICENSED",
-  "private": true,
+  "author": "rafern",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rafern/canvas-ui-wl.git"
+  },
   "devDependencies": {
-    "canvas-ui": "github:playkostudios/canvas-ui#2.0.0",
     "eslint": "^7.30.0",
     "gl-matrix": "^3.3.0",
-    "jsdoc": "^3.6.7",
-    "jsdoc-to-markdown": "^7.0.1"
+    "jsdoc": "^3.6.7"
   },
   "peerDependencies": {
-    "canvas-ui": "2.x",
+    "canvas-ui": "3.x",
     "gl-matrix": "3.x"
   },
   "dependencies": {
-    "esbuild": "^0.12.15",
-    "remove": "^0.1.5"
+    "esbuild": "^0.12.15"
   }
 }

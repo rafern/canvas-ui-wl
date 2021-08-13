@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: module:WLVirtualKeyboardRoot</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: module:WLVirtualKeyboardRoot</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>module:WLVirtualKeyboardRoot<span class="signature">(wlObject, material, keyboardTemplate<span class="signature-attributes">opt</span>, keyboardDriver<span class="signature-attributes">opt</span>, theme<span class="signature-attributes">opt</span>, unitsPerPixel<span class="signature-attributes">opt</span>, collisionGroup<span class="signature-attributes">opt</span>, registerPointerDriver<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description">A WLRoot with a virtual keyboard, similar to VirtualKeyboardRoot from
+canvas-ui. Can also be automatically hidden when there is no keyboard focus
+by callid updateVisibility before calling update. This doesn't need to be
+directly used, the virtual-keyboard-ui-root component can be used instead.</div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    
+    <h4 class="name" id="module:WLVirtualKeyboardRoot"><span class="type-signature"></span>new module:WLVirtualKeyboardRoot<span class="signature">(wlObject, material, keyboardTemplate<span class="signature-attributes">opt</span>, keyboardDriver<span class="signature-attributes">opt</span>, theme<span class="signature-attributes">opt</span>, unitsPerPixel<span class="signature-attributes">opt</span>, collisionGroup<span class="signature-attributes">opt</span>, registerPointerDriver<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Create a new WLVirtualKeyboardRoot.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>wlObject</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The object where the mesh will be added.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>material</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Material</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The material to use for this root's mesh. The material will be cloned.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>keyboardTemplate</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">VirtualKeyboardTemplate</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    defaultVirtualKeyboardTemplate
+                
+                </td>
+            
+
+            <td class="description last">The virtual keyboard's layout template. Uses the US QWERTY layout by default.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>keyboardDriver</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">KeyboardDriver</span>
+|
+
+<span class="param-type">null</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">The KeyboardDriver to dispatch key events to. If null (default), WLRoot.keyboardDriver is used.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>theme</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Theme</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    new Theme()
+                
+                </td>
+            
+
+            <td class="description last">The root's theme. If none is supplied, the default theme is used.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>unitsPerPixel</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    0.01
+                
+                </td>
+            
+
+            <td class="description last">The amount of world units per canvas pixel. Determines the pixel density of the mesh.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>collisionGroup</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+|
+
+<span class="param-type">null</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    1
+                
+                </td>
+            
+
+            <td class="description last">The collision group that this root's collider will belong to. If null, collider and cursor-target will not be added.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>registerPointerDriver</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last">Register the default pointer driver to this root? If collisionGroup is null, this is forced to false.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core_WLVirtualKeyboardRoot.js.html">core/WLVirtualKeyboardRoot.js</a>, <a href="core_WLVirtualKeyboardRoot.js.html#line11">line 11</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module-WLRoot.html">WLRoot</a></li><li><a href="module-WLVirtualKeyboardRoot.html">WLVirtualKeyboardRoot</a></li></ul><h3>Global</h3><ul><li><a href="global.html#cursorObject">cursorObject</a></li><li><a href="global.html#keyboardComponentName">keyboardComponentName</a></li><li><a href="global.html#keyboardObject">keyboardObject</a></li><li><a href="global.html#material">material</a></li><li><a href="global.html#pointerComponentName">pointerComponentName</a></li><li><a href="global.html#pointerObject">pointerObject</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Fri Aug 13 2021 12:34:05 GMT+0100 (British Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
