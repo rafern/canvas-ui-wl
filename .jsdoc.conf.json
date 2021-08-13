@@ -3,7 +3,8 @@
   "recurseDepth": 10,
   "opts": {
     "recurse": true,
-    "destination": "./docs/"
+    "destination": "./docs/",
+    "readme": "README.md"
   },
   "source": {
     "include": ["src"],
