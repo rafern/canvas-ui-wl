@@ -1,4 +1,4 @@
-import { PointerHint } from 'canvas-ui';
+import { PointerHint } from '@rafern/canvas-ui';
 import { WLRoot } from '../core/WLRoot';
 /*global WL*/
 

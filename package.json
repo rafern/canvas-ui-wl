@@ -6,7 +6,7 @@
   "module": "lib/index.esm.js",
   "scripts": {
     "lint": "eslint . --ext .js",
-    "build": "esbuild src/index.js --bundle --minify --sourcemap --target=es6 --format=esm --external:canvas-ui --external:gl-matrix --outfile=lib/index.esm.js",
+    "build": "esbuild src/index.js --bundle --minify --sourcemap --target=es6 --format=esm --external:@rafern/canvas-ui --external:gl-matrix --outfile=lib/index.esm.js",
     "docs": "jsdoc -c ./.jsdoc.conf.json"
   },
   "files": [

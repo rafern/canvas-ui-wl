@@ -1,4 +1,4 @@
-import { VirtualKeyboard, defaultVirtualKeyboardTemplate, Theme, Margin } from 'canvas-ui';
+import { VirtualKeyboard, defaultVirtualKeyboardTemplate, Theme, Margin } from '@rafern/canvas-ui';
 import { WLRoot } from './WLRoot';
 
 /**

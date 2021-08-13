@@ -1,4 +1,4 @@
-import { Root, PointerDriver, DOMKeyboardDriver, Theme } from 'canvas-ui';
+import { Root, PointerDriver, DOMKeyboardDriver, Theme } from '@rafern/canvas-ui';
 import { vec3 } from 'gl-matrix';
 /*global WL*/
 
