@@ -43,6 +43,8 @@ This project is licensed under the MIT license (see the LICENSE file)
 
 This project uses the following open-source projects:
 - [@rafern/canvas-ui](https://github.com/rafern/canvas-ui) licensed under the MIT license
+- [@wonderlandengine/api](https://www.npmjs.com/package/@wonderlandengine/api) licensed under the MIT license
+- [@wonderlandengine/components](https://www.npmjs.com/package/@wonderlandengine/components) licensed under the MIT license
 - [esbuild](https://github.com/evanw/esbuild) licensed under the MIT license
 - [eslint](https://github.com/eslint/eslint) licensed under the MIT license
 - [gl-matrix](https://github.com/toji/gl-matrix) licensed under the MIT license
