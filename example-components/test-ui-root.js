@@ -1,4 +1,4 @@
-import { Margin, Label, TextButton, BasicTextInput, Column, Row } from 'canvas-ui';
+import { Margin, Label, TextButton, BasicTextInput, Column, Row } from '@rafern/canvas-ui';
 import { WLRoot } from '../index.esm.js';
 /*global WL*/
 
