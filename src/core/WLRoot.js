@@ -129,7 +129,7 @@ export class WLRoot extends Root {
                 /*this.meshObject.getTranslationWorld(pos);
                 vec3.sub(cursorPos, cursorPos, pos);
                 vec3.div(cursorPos, cursorPos, this.meshObject.scalingWorld);*/
-                console.log('transform', this.meshObject.sclaingWorld)
+                console.log('transform', this.meshObject.transformWorld);
                 mat4.invert(invTransform, this.meshObject.transformWorld);
                 vec3.transformMat4(cursorPos, cursorPos, invTransform);
                 console.log(cursorPos);
