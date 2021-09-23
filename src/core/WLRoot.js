@@ -128,7 +128,8 @@ export class WLRoot extends Root {
                 /*this.meshObject.getTranslationWorld(pos);
                 vec3.sub(cursorPos, cursorPos, pos);
                 vec3.div(cursorPos, cursorPos, this.meshObject.scalingWorld);*/
-                vec3.transformMat4(cursorPos, cursorPos, this.meshObject.transformWorld);
+                console.log(cursorPos);
+                //vec3.transformMat4(cursorPos, cursorPos, this.meshObject.transformWorld);
 
                 return [
                     Math.min(Math.max((cursorPos[0] + 1) / 2, 0), 1),
