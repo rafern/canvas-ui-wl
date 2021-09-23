@@ -127,7 +127,7 @@ export class WLRoot extends Root {
                 cursorPos.set(cursor.rayHit.locations[0]);
                 this.meshObject.getTranslationWorld(pos);
                 vec3.sub(cursorPos, cursorPos, pos);
-                vec3.div(cursorPos, cursorPos, this.meshObject.scalingLocal);
+                vec3.div(cursorPos, cursorPos, this.meshObject.scalingWorld);
 
                 return [
                     Math.min(Math.max((cursorPos[0] + 1) / 2, 0), 1),
@@ -194,8 +194,8 @@ export class WLRoot extends Root {
 
             if(this.collision !== null) {
                 this.collision.extents = [
-                    this.meshObject.scalingLocal[0],
-                    this.meshObject.scalingLocal[1],
+                    this.meshObject.scalingWorld[0],
+                    this.meshObject.scalingWorld[1],
                     0.01,
                 ];
             }
