@@ -129,6 +129,7 @@ export class WLRoot extends Root {
                 /*this.meshObject.getTranslationWorld(pos);
                 vec3.sub(cursorPos, cursorPos, pos);
                 vec3.div(cursorPos, cursorPos, this.meshObject.scalingWorld);*/
+                console.log('transform', this.meshObject.sclaingWorld)
                 mat4.invert(invTransform, this.meshObject.transformWorld);
                 vec3.transformMat4(cursorPos, cursorPos, invTransform);
                 console.log(cursorPos);
@@ -138,8 +139,6 @@ export class WLRoot extends Root {
                     Math.min(Math.max(1 - ((cursorPos[1] + 1) / 2), 0), 1),
                 ];
             }
-
-            console.warn('!!!!!!!!!!!!!!! library updated');
 
             if(registerPointerDriver) {
                 target.addUnHoverFunction((_, cursor) => {
