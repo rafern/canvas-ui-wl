@@ -128,10 +128,9 @@ export class WLRoot extends Root {
                 cursorPos.set(cursor.rayHit.locations[0]);
                 this.meshObject.getTranslationWorld(pos);
                 vec3.sub(cursorPos, cursorPos, pos);
-                vec3.div(cursorPos, cursorPos, this.meshObject.scalingWorld);
                 quat.invert(rot, this.meshObject.rotationWorld);
-                console.log('(rot)', ...this.meshObject.rotationWorld, '->', ...rot);
                 vec3.transformQuat(cursorPos, cursorPos, rot);
+                vec3.div(cursorPos, cursorPos, this.meshObject.scalingWorld);
                 console.log('(cursor pos)', ...cursorPos);
 
                 return [
