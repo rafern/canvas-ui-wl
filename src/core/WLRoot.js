@@ -131,7 +131,6 @@ export class WLRoot extends Root {
                 quat.invert(rot, this.meshObject.rotationWorld);
                 vec3.transformQuat(cursorPos, cursorPos, rot);
                 vec3.div(cursorPos, cursorPos, this.meshObject.scalingWorld);
-                console.log('(cursor pos)', ...cursorPos);
 
                 return [
                     Math.min(Math.max((cursorPos[0] + 1) / 2, 0), 1),
