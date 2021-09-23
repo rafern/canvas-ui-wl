@@ -137,6 +137,8 @@ export class WLRoot extends Root {
                 ];
             }
 
+            console.warn('!!!!!!!!!!!!!!! library updated');
+
             if(registerPointerDriver) {
                 target.addUnHoverFunction((_, cursor) => {
                     WLRoot.pointerDriver.leavePointer(
