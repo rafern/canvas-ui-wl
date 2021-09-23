@@ -1,5 +1,5 @@
 import { Root, PointerDriver, DOMKeyboardDriver, Theme } from '@rafern/canvas-ui';
-import { vec3, mat4 } from 'gl-matrix';
+import { vec3, quat } from 'gl-matrix';
 /*global WL*/
 
 // Drivers shared by all UI roots. For some reason, setting up the drivers here
@@ -123,11 +123,14 @@ export class WLRoot extends Root {
 
             const cursorPos = new Float32Array(3);
             const pos = new Float32Array(3);
+            const rot = new Float32Array(4);
             const getCursorPos = cursor => {
                 cursorPos.set(cursor.rayHit.locations[0]);
                 this.meshObject.getTranslationWorld(pos);
                 vec3.sub(cursorPos, cursorPos, pos);
                 vec3.div(cursorPos, cursorPos, this.meshObject.scalingWorld);
+                quat.invert(rot, this.meshObject.rotationWorld);
+                vec3.transformQuat(cursorPos, cursorPos, rot);
                 console.log(cursorPos);
 
                 return [
