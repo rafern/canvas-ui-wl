@@ -123,15 +123,11 @@ export class WLRoot extends Root {
 
             const cursorPos = new Float32Array(3);
             const pos = new Float32Array(3);
-            const invTransform = new Float32Array(16);
             const getCursorPos = cursor => {
                 cursorPos.set(cursor.rayHit.locations[0]);
-                /*this.meshObject.getTranslationWorld(pos);
+                this.meshObject.getTranslationWorld(pos);
                 vec3.sub(cursorPos, cursorPos, pos);
-                vec3.div(cursorPos, cursorPos, this.meshObject.scalingWorld);*/
-                console.log('transform', this.meshObject.transformWorld);
-                mat4.invert(invTransform, this.meshObject.transformWorld);
-                vec3.transformMat4(cursorPos, cursorPos, invTransform);
+                vec3.div(cursorPos, cursorPos, this.meshObject.scalingWorld);
                 console.log(cursorPos);
 
                 return [
