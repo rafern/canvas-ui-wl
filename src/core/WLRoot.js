@@ -190,8 +190,8 @@ export class WLRoot extends Root {
             const [width, height] = this.dimensions;
             this.meshObject.resetScaling();
             this.meshObject.scale([
-                this.unitsPerPixel * width,
-                this.unitsPerPixel * height,
+                this.unitsPerPixel * width / this.resolution,
+                this.unitsPerPixel * height / this.resolution,
                 0.01,
             ]);
 
