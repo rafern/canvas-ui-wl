@@ -1,4 +1,4 @@
-import { Root, PointerDriver, DOMKeyboardDriver, Theme } from '@rafern/canvas-ui';
+import { Root, PointerDriver, DOMKeyboardDriver } from '@rafern/canvas-ui';
 import { vec3, quat } from 'gl-matrix';
 /*global WL*/
 
@@ -75,21 +75,40 @@ export class WLRoot extends Root {
     }
 
     /**
-     * Create a new WLRoot.
+     * Create a new WLRoot. Note that the properties object can also contain
+     * optional parameters for the canvas-ui Root constructor, and will be
+     * passed to it.
+     *
+     * If texture bleeding prevention is not specified, then it will be enabled
+     * by default.
+     *
+     * If a pointer style handler is not specified, then a default pointer
+     * style handler that changes the cursor style of the Wonderland Engine
+     * canvas will be used.
+     *
      * @param {Object} wlObject The object where the mesh will be added.
      * @param {Material} material The material to use for this root's mesh. The material will be cloned.
      * @param {Widget} child The root's child widget.
-     * @param {Theme} [theme=new Theme()] The root's theme. If none is supplied, the default theme is used.
-     * @param {number} [unitsPerPixel=0.01] The amount of world units per canvas pixel. Determines the pixel density of the mesh.
-     * @param {number | null} [collisionGroup=1] The collision group that this root's collider will belong to. If null, collider and cursor-target will not be added.
-     * @param {boolean} [registerPointerDriver=true] Register the default pointer driver to this root? If collisionGroup is null, this is forced to false.
-     * @param {boolean} [registerKeyboardDriver=true] Register the default keyboard driver to this root?
+     * @param {Object} [properties]
+     * @param {number} [properties.unitsPerPixel=0.01] The amount of world units per canvas pixel. Determines the pixel density of the mesh.
+     * @param {number | null} [properties.collisionGroup=1] The collision group that this root's collider will belong to. If null, collider and cursor-target will not be added.
+     * @param {boolean} [properties.registerPointerDriver=true] Register the default pointer driver to this root? If collisionGroup is null, this is forced to false.
+     * @param {boolean} [properties.registerKeyboardDriver=true] Register the default keyboard driver to this root?
      * @constructor
      */
-    constructor(wlObject, material, child, theme = new Theme(), unitsPerPixel = 0.01, collisionGroup = 1, registerPointerDriver = true, registerKeyboardDriver = true) {
-        super(child, style => { WL.canvas.style.cursor = style }, theme);
-        this.unitsPerPixel = unitsPerPixel;
+    constructor(wlObject, material, child, properties) {
+        properties = {
+            pointeerStyleHandler: style => { WL.canvas.style.cursor = style },
+            preventBleeding: true,
+            ...properties
+        };
 
+        super(child, properties);
+
+        const collisionGroup = properties.collisionGroup ?? 1;
+        const registerPointerDriver = properties.registerPointerDriver ?? true;
+        const registerKeyboardDriver = properties.registerKeyboardDriver ?? true;
+        this.unitsPerPixel = properties.unitsPerPixel ?? 0.01;
         this.texture = null;
 
         // Create the child object where the mesh and collider will be put.
