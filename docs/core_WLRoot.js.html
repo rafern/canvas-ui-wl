@@ -26,8 +26,8 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { Root, PointerDriver, DOMKeyboardDriver, Theme } from '@rafern/canvas-ui';
-import { vec3 } from 'gl-matrix';
+            <pre class="prettyprint source linenums"><code>import { Root, PointerDriver, DOMKeyboardDriver } from '@rafern/canvas-ui';
+import { vec3, quat } from 'gl-matrix';
 /*global WL*/
 
 // Drivers shared by all UI roots. For some reason, setting up the drivers here
@@ -103,20 +103,41 @@ export class WLRoot extends Root {
     }
 
     /**
-     * Create a new WLRoot.
+     * Create a new WLRoot. Note that the properties object can also contain
+     * optional parameters for the canvas-ui Root constructor, and will be
+     * passed to it.
+     *
+     * If texture bleeding prevention is not specified, then it will be enabled
+     * by default.
+     *
+     * If a pointer style handler is not specified, then a default pointer
+     * style handler that changes the cursor style of the Wonderland Engine
+     * canvas will be used.
+     *
      * @param {Object} wlObject The object where the mesh will be added.
      * @param {Material} material The material to use for this root's mesh. The material will be cloned.
      * @param {Widget} child The root's child widget.
-     * @param {Theme} [theme=new Theme()] The root's theme. If none is supplied, the default theme is used.
-     * @param {number} [unitsPerPixel=0.01] The amount of world units per canvas pixel. Determines the pixel density of the mesh.
-     * @param {number | null} [collisionGroup=1] The collision group that this root's collider will belong to. If null, collider and cursor-target will not be added.
-     * @param {boolean} [registerPointerDriver=true] Register the default pointer driver to this root? If collisionGroup is null, this is forced to false.
-     * @param {boolean} [registerKeyboardDriver=true] Register the default keyboard driver to this root?
+     * @param {Object} [properties] An object containing all optional properties for this Root. Can have all properties from canvas-ui's RootProperties interface.
+     * @param {number} [properties.unitsPerPixel=0.01] The amount of world units per canvas pixel. Determines the pixel density of the mesh.
+     * @param {number | null} [properties.collisionGroup=1] The collision group that this root's collider will belong to. If null, collider and cursor-target will not be added.
+     * @param {boolean} [properties.registerPointerDriver=true] Register the default pointer driver to this root? If collisionGroup is null, this is forced to false.
+     * @param {boolean} [properties.registerKeyboardDriver=true] Register the default keyboard driver to this root?
      * @constructor
      */
-    constructor(wlObject, material, child, theme = new Theme(), unitsPerPixel = 0.01, collisionGroup = 1, registerPointerDriver = true, registerKeyboardDriver = true) {
-        super(child, style => { WL.canvas.style.cursor = style }, theme);
-        this.unitsPerPixel = unitsPerPixel;
+    constructor(wlObject, material, child, properties) {
+        properties = {
+            pointerStyleHandler: style => { WL.canvas.style.cursor = style },
+            preventBleeding: true,
+            ...properties
+        };
+
+        super(child, properties);
+
+        const collisionGroup = properties.collisionGroup ?? 1;
+        const registerPointerDriver = properties.registerPointerDriver ?? true;
+        const registerKeyboardDriver = properties.registerKeyboardDriver ?? true;
+        this.unitsPerPixel = properties.unitsPerPixel ?? 0.01;
+        this.texture = null;
 
         // Create the child object where the mesh and collider will be put.
         // Starts inactive since the mesh won't be ready yet
@@ -130,12 +151,13 @@ export class WLRoot extends Root {
             this.registerDriver(WLRoot.keyboardDriver);
 
         // Setup mesh for rendering in world
-        this.mesh = this.meshObject.addComponent('mesh');
+        this.mesh = null;
+        this.meshComponent = this.meshObject.addComponent('mesh');
         // keep clone as a variable instead of accessing it later via
-        // this.mesh.material because mesh's material setter wraps the material,
+        // this.meshComponent.material because mesh's material setter wraps the material,
         // so it can't be reused
         this.materialClone = material.clone();
-        this.mesh.material = this.materialClone;
+        this.meshComponent.material = this.materialClone;
         this.oldTexSize = [0, 0];
         this._setupMesh(1, 0);
 
@@ -147,15 +169,18 @@ export class WLRoot extends Root {
                 group: 1 &lt;&lt; collisionGroup,
             });
 
-            const target = this.meshObject.addComponent('cursor-target');
+            this.cursorTarget = this.meshObject.addComponent('cursor-target');
 
             const cursorPos = new Float32Array(3);
             const pos = new Float32Array(3);
+            const rot = new Float32Array(4);
             const getCursorPos = cursor => {
                 cursorPos.set(cursor.rayHit.locations[0]);
                 this.meshObject.getTranslationWorld(pos);
                 vec3.sub(cursorPos, cursorPos, pos);
-                vec3.div(cursorPos, cursorPos, this.meshObject.scalingLocal);
+                quat.invert(rot, this.meshObject.rotationWorld);
+                vec3.transformQuat(cursorPos, cursorPos, rot);
+                vec3.div(cursorPos, cursorPos, this.meshObject.scalingWorld);
 
                 return [
                     Math.min(Math.max((cursorPos[0] + 1) / 2, 0), 1),
@@ -164,32 +189,39 @@ export class WLRoot extends Root {
             }
 
             if(registerPointerDriver) {
-                target.addUnHoverFunction((_, cursor) => {
+                this.cursorTarget.addUnHoverFunction((_, cursor) => {
                     WLRoot.pointerDriver.leavePointer(
                         this, WLRoot.getPointerID(cursor)
                     );
                 });
-                target.addMoveFunction((_, cursor) => {
+                this.cursorTarget.addMoveFunction((_, cursor) => {
                     WLRoot.pointerDriver.movePointer(
                         this, WLRoot.getPointerID(cursor), ...getCursorPos(cursor), null, false, false, false
                     );
                 });
-                target.addDownFunction((_, cursor) => {
+                this.cursorTarget.addDownFunction((_, cursor) => {
                     WLRoot.pointerDriver.movePointer(
                         this, WLRoot.getPointerID(cursor), ...getCursorPos(cursor), 1, false, false, false
                     );
                 });
-                target.addUpFunction((_, cursor) => {
+                this.cursorTarget.addUpFunction((_, cursor) => {
                     WLRoot.pointerDriver.movePointer(
                         this, WLRoot.getPointerID(cursor), ...getCursorPos(cursor), 0, false, false, false
                     );
                 });
             }
         }
-        else
+        else {
             this.collision = null;
+            this.cursorTarget = null;
+        }
 
         this.valid = true;
+
+        // Wonderland engine has much stricter texture limits because of the
+        // texture atlas system. Limit canvas to 2048x2048 by default
+        this.maxCanvasWidth = 2048;
+        this.maxCanvasHeight = 2048;
     }
 
 
@@ -213,6 +245,7 @@ export class WLRoot extends Root {
             // Resize and update UV if layout was dirty so that UI is not
             // stretched
             const [width, height] = this.dimensions;
+            const [scaleX, scaleY] = this.effectiveScale;
             this.meshObject.resetScaling();
             this.meshObject.scale([
                 this.unitsPerPixel * width,
@@ -222,23 +255,13 @@ export class WLRoot extends Root {
 
             if(this.collision !== null) {
                 this.collision.extents = [
-                    this.meshObject.scalingLocal[0],
-                    this.meshObject.scalingLocal[1],
+                    this.meshObject.scalingWorld[0],
+                    this.meshObject.scalingWorld[1],
                     0.01,
                 ];
             }
 
-            // XXX FIXME for now, use the workaround (setupMesh)
-            /*const vertexData = this.mesh.mesh.vertexData;
-            const u = width / canvasWidth;
-            const v = 1 - (height / canvasHeight);
-            this._setUV(vertexData, 1, u, 1); // top-right
-            this._setUV(vertexData, 2, 0, v); // bottom-left
-            this._setUV(vertexData, 3, u, v); // bottom-right
-            this.mesh.mesh = this.mesh.mesh;
-            this.mesh.active = false;
-            this.mesh.active = true;*/
-            this._setupMesh(width / canvasWidth, 1 - (height / canvasHeight));
+            this._setupMesh(scaleX * width / canvasWidth, 1 - (scaleY * height / canvasHeight));
         }
 
         // Update (post-layout)
@@ -258,6 +281,7 @@ export class WLRoot extends Root {
             this.oldTexSize[0] = canvasWidth;
             this.oldTexSize[1] = canvasHeight;
             const mat = this.materialClone;
+            const oldTexture = this.texture;
             this.texture = new WL.Texture(this.canvas);
             if(mat.shader === 'Flat Opaque Textured' || mat.shader === 'Flat Transparent Textured')
                 mat.flatTexture = this.texture;
@@ -265,6 +289,11 @@ export class WLRoot extends Root {
                 mat.diffuseTexture = this.texture;
             else
                 console.error('Shader', mat.shader, 'not supported by WLRoot');
+
+            // Destroy old texture so that there isn't an accumulation of
+            // texture atlas usage over time
+            if(oldTexture)
+                oldTexture.destroy();
         }
         else {
             //console.log('Root was dirty, updating texture');
@@ -290,11 +319,49 @@ export class WLRoot extends Root {
         this._setVertex(vertexData, 1,  1,  1, 0, 0, 0, 1, u, 1); // top-right
         this._setVertex(vertexData, 2, -1, -1, 0, 0, 0, 1, 0, v); // bottom-left
         this._setVertex(vertexData, 3,  1, -1, 0, 0, 0, 1, u, v); // bottom-right
-        this.mesh.mesh = new WL.Mesh({
+
+        const newMesh = new WL.Mesh({
             indexData,
             indexType: WL.MeshIndexType.UnsignedByte,
             vertexData,
         });
+
+        this.meshComponent.mesh = newMesh;
+
+        if(this.mesh)
+            this.mesh.destroy();
+
+        this.mesh = newMesh;
+    }
+
+    destroy() {
+        if(this.texture) {
+            this.texture.destroy();
+            this.texture = null;
+        }
+
+        if(this.collision) {
+            this.collision.destroy();
+            this.collision = null;
+        }
+
+        if(this.cursorTarget) {
+            this.cursorTarget.destroy();
+            this.cursorTarget = null;
+        }
+
+        this.meshComponent.destroy();
+        this.meshComponent = null;
+
+        // FIXME material is not destroyed. find a way to do it
+
+        if(this.mesh)
+            this.mesh.destroy();
+
+        this.meshObject.destroy();
+        this.meshObject = null;
+
+        super.destroy();
     }
 }
 </code></pre>
@@ -313,7 +380,7 @@ export class WLRoot extends Root {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Fri Aug 13 2021 13:01:34 GMT+0100 (British Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Wed Aug 10 2022 16:09:27 GMT+0100 (British Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

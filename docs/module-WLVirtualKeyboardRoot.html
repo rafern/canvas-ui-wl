@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>module:WLVirtualKeyboardRoot<span class="signature">(wlObject, material, keyboardTemplate<span class="signature-attributes">opt</span>, keyboardDriver<span class="signature-attributes">opt</span>, theme<span class="signature-attributes">opt</span>, unitsPerPixel<span class="signature-attributes">opt</span>, collisionGroup<span class="signature-attributes">opt</span>, registerPointerDriver<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>module:WLVirtualKeyboardRoot<span class="signature">(wlObject, material, properties<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
             <div class="class-description">A WLRoot with a virtual keyboard, similar to VirtualKeyboardRoot from
 canvas-ui. Can also be automatically hidden when there is no keyboard focus
@@ -48,7 +48,7 @@ directly used, the virtual-keyboard-ui-root component can be used instead.</div>
     
 
     
-    <h4 class="name" id="module:WLVirtualKeyboardRoot"><span class="type-signature"></span>new module:WLVirtualKeyboardRoot<span class="signature">(wlObject, material, keyboardTemplate<span class="signature-attributes">opt</span>, keyboardDriver<span class="signature-attributes">opt</span>, theme<span class="signature-attributes">opt</span>, unitsPerPixel<span class="signature-attributes">opt</span>, collisionGroup<span class="signature-attributes">opt</span>, registerPointerDriver<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="module:WLVirtualKeyboardRoot"><span class="type-signature"></span>new module:WLVirtualKeyboardRoot<span class="signature">(wlObject, material, properties<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -84,8 +84,6 @@ directly used, the virtual-keyboard-ui-root component can be used instead.</div>
         
 
         
-        <th>Default</th>
-        
 
         <th class="last">Description</th>
     </tr>
@@ -119,10 +117,6 @@ directly used, the virtual-keyboard-ui-root component can be used instead.</div>
             
 
             
-                <td class="default">
-                
-                </td>
-            
 
             <td class="description last">The object where the mesh will be added.</td>
         </tr>
@@ -154,10 +148,6 @@ directly used, the virtual-keyboard-ui-root component can be used instead.</div>
             
 
             
-                <td class="default">
-                
-                </td>
-            
 
             <td class="description last">The material to use for this root's mesh. The material will be cloned.</td>
         </tr>
@@ -166,13 +156,13 @@ directly used, the virtual-keyboard-ui-root component can be used instead.</div>
 
         <tr>
             
-                <td class="name"><code>keyboardTemplate</code></td>
+                <td class="name"><code>properties</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">VirtualKeyboardTemplate</span>
+<span class="param-type">Object</span>
 
 
             
@@ -191,16 +181,33 @@ directly used, the virtual-keyboard-ui-root component can be used instead.</div>
             
 
             
-                <td class="default">
-                
-                    defaultVirtualKeyboardTemplate
-                
-                </td>
-            
 
-            <td class="description last">The virtual keyboard's layout template. Uses the US QWERTY layout by default.</td>
-        </tr>
+            <td class="description last">An object containing all optional properties for this Root. Can have all properties from canvas-ui's VirtualKeyboardRootProperties interface and <a href="WLRoot.html">WLRoot</a>'s properties constructor argument.
+                <h6>Properties</h6>
+                
 
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
     
 
         <tr>
@@ -244,162 +251,10 @@ directly used, the virtual-keyboard-ui-root component can be used instead.</div>
         </tr>
 
     
+    </tbody>
+</table>
 
-        <tr>
-            
-                <td class="name"><code>theme</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Theme</span>
-
-
-            
             </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    new Theme()
-                
-                </td>
-            
-
-            <td class="description last">The root's theme. If none is supplied, the default theme is used.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>unitsPerPixel</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    0.01
-                
-                </td>
-            
-
-            <td class="description last">The amount of world units per canvas pixel. Determines the pixel density of the mesh.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>collisionGroup</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-|
-
-<span class="param-type">null</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    1
-                
-                </td>
-            
-
-            <td class="description last">The collision group that this root's collider will belong to. If null, collider and cursor-target will not be added.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>registerPointerDriver</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    true
-                
-                </td>
-            
-
-            <td class="description last">Register the default pointer driver to this root? If collisionGroup is null, this is forced to false.</td>
         </tr>
 
     
@@ -508,7 +363,7 @@ directly used, the virtual-keyboard-ui-root component can be used instead.</div>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Fri Aug 13 2021 13:01:34 GMT+0100 (British Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Wed Aug 10 2022 16:09:27 GMT+0100 (British Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

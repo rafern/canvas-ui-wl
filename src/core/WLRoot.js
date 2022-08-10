@@ -89,7 +89,7 @@ export class WLRoot extends Root {
      * @param {Object} wlObject The object where the mesh will be added.
      * @param {Material} material The material to use for this root's mesh. The material will be cloned.
      * @param {Widget} child The root's child widget.
-     * @param {Object} [properties]
+     * @param {Object} [properties] An object containing all optional properties for this Root. Can have all properties from canvas-ui's RootProperties interface.
      * @param {number} [properties.unitsPerPixel=0.01] The amount of world units per canvas pixel. Determines the pixel density of the mesh.
      * @param {number | null} [properties.collisionGroup=1] The collision group that this root's collider will belong to. If null, collider and cursor-target will not be added.
      * @param {boolean} [properties.registerPointerDriver=true] Register the default pointer driver to this root? If collisionGroup is null, this is forced to false.

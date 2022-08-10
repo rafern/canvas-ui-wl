@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>module:WLRoot<span class="signature">(wlObject, material, child, theme<span class="signature-attributes">opt</span>, unitsPerPixel<span class="signature-attributes">opt</span>, collisionGroup<span class="signature-attributes">opt</span>, registerPointerDriver<span class="signature-attributes">opt</span>, registerKeyboardDriver<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>module:WLRoot<span class="signature">(wlObject, material, child, properties<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
             <div class="class-description">A canvas-ui Root which automatically manages a mesh and input. For an example
 on how to use this in a component, see example-components/test-ui-root.js</div>
@@ -46,7 +46,7 @@ on how to use this in a component, see example-components/test-ui-root.js</div>
     
 
     
-    <h4 class="name" id="module:WLRoot"><span class="type-signature"></span>new module:WLRoot<span class="signature">(wlObject, material, child, theme<span class="signature-attributes">opt</span>, unitsPerPixel<span class="signature-attributes">opt</span>, collisionGroup<span class="signature-attributes">opt</span>, registerPointerDriver<span class="signature-attributes">opt</span>, registerKeyboardDriver<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="module:WLRoot"><span class="type-signature"></span>new module:WLRoot<span class="signature">(wlObject, material, child, properties<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -54,7 +54,16 @@ on how to use this in a component, see example-components/test-ui-root.js</div>
 
 
 <div class="description">
-    Create a new WLRoot.
+    Create a new WLRoot. Note that the properties object can also contain
+optional parameters for the canvas-ui Root constructor, and will be
+passed to it.
+
+If texture bleeding prevention is not specified, then it will be enabled
+by default.
+
+If a pointer style handler is not specified, then a default pointer
+style handler that changes the cursor style of the Wonderland Engine
+canvas will be used.
 </div>
 
 
@@ -81,8 +90,6 @@ on how to use this in a component, see example-components/test-ui-root.js</div>
         <th>Attributes</th>
         
 
-        
-        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -117,10 +124,6 @@ on how to use this in a component, see example-components/test-ui-root.js</div>
             
 
             
-                <td class="default">
-                
-                </td>
-            
 
             <td class="description last">The object where the mesh will be added.</td>
         </tr>
@@ -151,10 +154,6 @@ on how to use this in a component, see example-components/test-ui-root.js</div>
                 </td>
             
 
-            
-                <td class="default">
-                
-                </td>
             
 
             <td class="description last">The material to use for this root's mesh. The material will be cloned.</td>
@@ -187,10 +186,6 @@ on how to use this in a component, see example-components/test-ui-root.js</div>
             
 
             
-                <td class="default">
-                
-                </td>
-            
 
             <td class="description last">The root's child widget.</td>
         </tr>
@@ -199,13 +194,13 @@ on how to use this in a component, see example-components/test-ui-root.js</div>
 
         <tr>
             
-                <td class="name"><code>theme</code></td>
+                <td class="name"><code>properties</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Theme</span>
+<span class="param-type">Object</span>
 
 
             
@@ -224,16 +219,33 @@ on how to use this in a component, see example-components/test-ui-root.js</div>
             
 
             
-                <td class="default">
-                
-                    new Theme()
-                
-                </td>
-            
 
-            <td class="description last">The root's theme. If none is supplied, the default theme is used.</td>
-        </tr>
+            <td class="description last">An object containing all optional properties for this Root. Can have all properties from canvas-ui's RootProperties interface.
+                <h6>Properties</h6>
+                
 
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
     
 
         <tr>
@@ -397,6 +409,13 @@ on how to use this in a component, see example-components/test-ui-root.js</div>
     </tbody>
 </table>
 
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
 
 
 
@@ -499,7 +518,7 @@ on how to use this in a component, see example-components/test-ui-root.js</div>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Fri Aug 13 2021 13:01:34 GMT+0100 (British Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Wed Aug 10 2022 16:09:27 GMT+0100 (British Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>
