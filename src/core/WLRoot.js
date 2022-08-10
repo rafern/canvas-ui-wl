@@ -188,10 +188,11 @@ export class WLRoot extends Root {
             // Resize and update UV if layout was dirty so that UI is not
             // stretched
             const [width, height] = this.dimensions;
+            const [scaleX, scaleY] = this.effectiveScale;
             this.meshObject.resetScaling();
             this.meshObject.scale([
-                this.unitsPerPixel * width / this.resolution,
-                this.unitsPerPixel * height / this.resolution,
+                this.unitsPerPixel * width / scaleX,
+                this.unitsPerPixel * height / scaleY,
                 0.01,
             ]);
 
@@ -234,6 +235,7 @@ export class WLRoot extends Root {
             this.oldTexSize[1] = canvasHeight;
             const mat = this.materialClone;
             this.texture = new WL.Texture(this.canvas);
+            console.log(mat, 'flatTexture' in mat, 'diffuseTexture' in mat);
             if(mat.shader === 'Flat Opaque Textured' || mat.shader === 'Flat Transparent Textured')
                 mat.flatTexture = this.texture;
             else if(mat.shader == 'Phong Opaque Textured')

@@ -1,4 +1,4 @@
-import { Margin, Label, TextButton, BasicTextInput, Column, Row } from '@rafern/canvas-ui';
+import { Label, Margin, Column, Row, TextInput, TextButton, Alignment, FlexAlignment, ValidatedVariable } from '@rafern/canvas-ui';
 import { WLRoot } from '../index.esm.js';
 /*global WL*/
 
@@ -12,11 +12,21 @@ WL.registerComponent('test-ui-root', {
             new Margin(
                 new Column()
                 .add(label)
-                .add(new BasicTextInput())
                 .add(
-                    new Row()
-                    .add(new TextButton('Button 1', () => label.text = 'Button 1 pressed!'))
-                    .add(new TextButton('Button 2', () => label.text = 'Button 2 pressed!'))
+                    new TextInput(new ValidatedVariable('', null, value => {
+                        label.text = `Text input: ${value}`;
+                    }, false))
+                )
+                .add(
+                    new Row({
+                        multiContainerAlignment: {
+                            main: FlexAlignment.Center,
+                            cross: Alignment.Stretch
+                        },
+                    }).add([
+                        new TextButton('Button 1', () => label.text = 'Button 1 clicked!'),
+                        new TextButton('Button 2', () => label.text = 'Button 2 clicked!'),
+                    ])
                 )
             ),
         );
