@@ -90,6 +90,8 @@ export class WLRoot extends Root {
         super(child, style => { WL.canvas.style.cursor = style }, theme);
         this.unitsPerPixel = unitsPerPixel;
 
+        this.texture = null;
+
         // Create the child object where the mesh and collider will be put.
         // Starts inactive since the mesh won't be ready yet
         this.meshObject = WL.scene.addObject(wlObject);
@@ -119,7 +121,7 @@ export class WLRoot extends Root {
                 group: 1 << collisionGroup,
             });
 
-            const target = this.meshObject.addComponent('cursor-target');
+            this.cursorTarget = this.meshObject.addComponent('cursor-target');
 
             const cursorPos = new Float32Array(3);
             const pos = new Float32Array(3);
@@ -139,30 +141,32 @@ export class WLRoot extends Root {
             }
 
             if(registerPointerDriver) {
-                target.addUnHoverFunction((_, cursor) => {
+                this.cursorTarget.addUnHoverFunction((_, cursor) => {
                     WLRoot.pointerDriver.leavePointer(
                         this, WLRoot.getPointerID(cursor)
                     );
                 });
-                target.addMoveFunction((_, cursor) => {
+                this.cursorTarget.addMoveFunction((_, cursor) => {
                     WLRoot.pointerDriver.movePointer(
                         this, WLRoot.getPointerID(cursor), ...getCursorPos(cursor), null, false, false, false
                     );
                 });
-                target.addDownFunction((_, cursor) => {
+                this.cursorTarget.addDownFunction((_, cursor) => {
                     WLRoot.pointerDriver.movePointer(
                         this, WLRoot.getPointerID(cursor), ...getCursorPos(cursor), 1, false, false, false
                     );
                 });
-                target.addUpFunction((_, cursor) => {
+                this.cursorTarget.addUpFunction((_, cursor) => {
                     WLRoot.pointerDriver.movePointer(
                         this, WLRoot.getPointerID(cursor), ...getCursorPos(cursor), 0, false, false, false
                     );
                 });
             }
         }
-        else
+        else {
             this.collision = null;
+            this.cursorTarget = null;
+        }
 
         this.valid = true;
 
@@ -210,16 +214,16 @@ export class WLRoot extends Root {
             }
 
             // XXX FIXME for now, use the workaround (setupMesh)
-            /*const vertexData = this.mesh.mesh.vertexData;
+            const vertexData = this.mesh.mesh.vertexData;
             const u = scaleX * width / canvasWidth;
             const v = 1 - (scaleY * height / canvasHeight);
             this._setUV(vertexData, 1, u, 1); // top-right
             this._setUV(vertexData, 2, 0, v); // bottom-left
             this._setUV(vertexData, 3, u, v); // bottom-right
-            this.mesh.mesh = this.mesh.mesh;
-            this.mesh.active = false;
-            this.mesh.active = true;*/
-            this._setupMesh(scaleX * width / canvasWidth, 1 - (scaleY * height / canvasHeight));
+            // this.mesh.mesh = this.mesh.mesh;
+            // this.mesh.active = false;
+            // this.mesh.active = true;
+            // this._setupMesh(scaleX * width / canvasWidth, 1 - (scaleY * height / canvasHeight));
         }
 
         // Update (post-layout)
@@ -239,14 +243,19 @@ export class WLRoot extends Root {
             this.oldTexSize[0] = canvasWidth;
             this.oldTexSize[1] = canvasHeight;
             const mat = this.materialClone;
+            const oldTexture = this.texture;
             this.texture = new WL.Texture(this.canvas);
-            console.log(mat, 'flatTexture' in mat, 'diffuseTexture' in mat);
             if(mat.shader === 'Flat Opaque Textured' || mat.shader === 'Flat Transparent Textured')
                 mat.flatTexture = this.texture;
             else if(mat.shader == 'Phong Opaque Textured')
                 mat.diffuseTexture = this.texture;
             else
                 console.error('Shader', mat.shader, 'not supported by WLRoot');
+
+            // Destroy old texture so that there isn't an accumulation of
+            // texture atlas usage over time
+            if(oldTexture)
+                oldTexture.destroy();
         }
         else {
             //console.log('Root was dirty, updating texture');
@@ -277,5 +286,32 @@ export class WLRoot extends Root {
             indexType: WL.MeshIndexType.UnsignedByte,
             vertexData,
         });
+    }
+
+    destroy() {
+        if(this.texture) {
+            this.texture.destroy();
+            this.texture = null;
+        }
+
+        if(this.collision) {
+            this.collision.destroy();
+            this.collision = null;
+        }
+
+        if(this.cursorTarget) {
+            this.cursorTarget.destroy();
+            this.cursorTarget = null;
+        }
+
+        // FIXME material is not destroyed. find a way to do it
+
+        this.mesh.destroy();
+        this.mesh = null;
+
+        this.meshObject.destroy();
+        this.meshObject = null;
+
+        super.destroy();
     }
 }
