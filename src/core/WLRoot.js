@@ -110,6 +110,7 @@ export class WLRoot extends Root {
         // so it can't be reused
         this.materialClone = material.clone();
         this.mesh.material = this.materialClone;
+        console.warn('initial mesh:', this.mesh.mesh);
         this.oldTexSize = [0, 0];
         this._setupMesh(1, 0);
 
@@ -213,17 +214,7 @@ export class WLRoot extends Root {
                 ];
             }
 
-            // XXX FIXME for now, use the workaround (setupMesh)
-            const vertexData = this.mesh.mesh.vertexData;
-            const u = scaleX * width / canvasWidth;
-            const v = 1 - (scaleY * height / canvasHeight);
-            this._setUV(vertexData, 1, u, 1); // top-right
-            this._setUV(vertexData, 2, 0, v); // bottom-left
-            this._setUV(vertexData, 3, u, v); // bottom-right
-            // this.mesh.mesh = this.mesh.mesh;
-            // this.mesh.active = false;
-            // this.mesh.active = true;
-            // this._setupMesh(scaleX * width / canvasWidth, 1 - (scaleY * height / canvasHeight));
+            this._setupMesh(scaleX * width / canvasWidth, 1 - (scaleY * height / canvasHeight));
         }
 
         // Update (post-layout)
