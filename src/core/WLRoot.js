@@ -98,7 +98,7 @@ export class WLRoot extends Root {
      */
     constructor(wlObject, material, child, properties) {
         properties = {
-            pointeerStyleHandler: style => { WL.canvas.style.cursor = style },
+            pointerStyleHandler: style => { WL.canvas.style.cursor = style },
             preventBleeding: true,
             ...properties
         };
