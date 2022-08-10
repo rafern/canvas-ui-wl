@@ -104,13 +104,13 @@ export class WLRoot extends Root {
             this.registerDriver(WLRoot.keyboardDriver);
 
         // Setup mesh for rendering in world
-        this.mesh = this.meshObject.addComponent('mesh');
+        this.mesh = null;
+        this.meshComponent = this.meshObject.addComponent('mesh');
         // keep clone as a variable instead of accessing it later via
-        // this.mesh.material because mesh's material setter wraps the material,
+        // this.meshComponent.material because mesh's material setter wraps the material,
         // so it can't be reused
         this.materialClone = material.clone();
-        this.mesh.material = this.materialClone;
-        console.warn('initial mesh:', this.mesh.mesh);
+        this.meshComponent.material = this.materialClone;
         this.oldTexSize = [0, 0];
         this._setupMesh(1, 0);
 
@@ -272,11 +272,19 @@ export class WLRoot extends Root {
         this._setVertex(vertexData, 1,  1,  1, 0, 0, 0, 1, u, 1); // top-right
         this._setVertex(vertexData, 2, -1, -1, 0, 0, 0, 1, 0, v); // bottom-left
         this._setVertex(vertexData, 3,  1, -1, 0, 0, 0, 1, u, v); // bottom-right
-        this.mesh.mesh = new WL.Mesh({
+
+        const newMesh = new WL.Mesh({
             indexData,
             indexType: WL.MeshIndexType.UnsignedByte,
             vertexData,
         });
+
+        this.meshComponent.mesh = newMesh;
+
+        if(this.mesh)
+            this.mesh.destroy();
+
+        this.mesh = newMesh;
     }
 
     destroy() {
@@ -295,10 +303,13 @@ export class WLRoot extends Root {
             this.cursorTarget = null;
         }
 
+        this.meshComponent.destroy();
+        this.meshComponent = null;
+
         // FIXME material is not destroyed. find a way to do it
 
-        this.mesh.destroy();
-        this.mesh = null;
+        if(this.mesh)
+            this.mesh.destroy();
 
         this.meshObject.destroy();
         this.meshObject = null;
