@@ -43,6 +43,6 @@ export class WLVirtualKeyboardRoot extends WLRoot {
             return;
 
         // Update visibility of virtual keyboard
-        this.enabled = this.keyboardDriver.getFocusedRoot() !== null;
+        this.enabled = this.keyboardDriver.needsInput;
     }
 }

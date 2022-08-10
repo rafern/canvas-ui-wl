@@ -59,7 +59,7 @@ WL.registerComponent('canvas-ui-input-guard', {
     },
     update(_dt) {
         if(this.keyboardComponent !== null) {
-            const enable = (WLRoot.keyboardDriver.getFocusedRoot() === null);
+            const enable = !WLRoot.keyboardDriver.needsInput;
             this.keyboardComponent.active = enable;
         }
 
