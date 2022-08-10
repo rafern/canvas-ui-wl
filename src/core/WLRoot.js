@@ -165,6 +165,11 @@ export class WLRoot extends Root {
             this.collision = null;
 
         this.valid = true;
+
+        // Wonderland engine has much stricter texture limits because of the
+        // texture atlas system. Limit canvas to 2048x2048 by default
+        this.maxCanvasWidth = 2048;
+        this.maxCanvasHeight = 2048;
     }
 
 
