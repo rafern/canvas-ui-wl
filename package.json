@@ -1,19 +1,25 @@
 {
   "name": "@rafern/canvas-ui-wl",
-  "version": "1.2.0",
+  "version": "2.0.0-rc1",
   "description": "A Typescript UI library which uses HTML canvases - Wonderland Engine integration",
-  "main": "lib/index.js",
-  "module": "lib/index.esm.js",
+  "main": "./lib/index.esm.js",
+  "exports": "./lib/index.esm.js",
   "scripts": {
     "lint": "eslint . --ext .js",
     "build": "esbuild src/index.js --bundle --minify --sourcemap --target=es6 --format=esm --external:@rafern/canvas-ui --external:gl-matrix --outfile=lib/index.esm.js",
-    "docs": "jsdoc -c ./.jsdoc.conf.json"
+    "docs": "jsdoc -c ./.jsdoc.conf.json",
+    "clean": "rimraf lib/*"
   },
   "files": [
     "lib",
     "package.json"
   ],
-  "keywords": [],
+  "keywords": [
+    "ui",
+    "typescript",
+    "canvas",
+    "wonderland"
+  ],
   "author": "rafern",
   "license": "MIT",
   "repository": {
@@ -21,15 +27,14 @@
     "url": "https://github.com/rafern/canvas-ui-wl.git"
   },
   "devDependencies": {
-    "eslint": "^7.30.0",
+    "esbuild": "^0.14.54",
+    "eslint": "^8.21.0",
     "gl-matrix": "^3.3.0",
-    "jsdoc": "^3.6.7"
+    "jsdoc": "^3.6.11",
+    "rimraf": "^3.0.2"
   },
   "peerDependencies": {
-    "@rafern/canvas-ui": ">= 3.3.0 < 4",
+    "@rafern/canvas-ui": ">= 4.0.0-rc2 < 5",
     "gl-matrix": "3.x"
-  },
-  "dependencies": {
-    "esbuild": "^0.12.15"
   }
 }
