@@ -34,7 +34,7 @@
     "rimraf": "^3.0.2"
   },
   "peerDependencies": {
-    "@rafern/canvas-ui": ">= 4.0.0-rc4 < 5",
+    "@rafern/canvas-ui": ">= 4.0.0-rc5 < 5",
     "gl-matrix": "3.x"
   }
 }
