@@ -162,14 +162,22 @@ export class WLRoot extends Root {
 
             if(registerPointerDriver) {
                 let shift = false, ctrl = false, alt = false;
-                const modifierListener = function(event) {
-                    shift = event.shiftKey;
-                    ctrl = event.ctrlKey;
-                    alt = event.altKey;
-                }
-
-                WL.canvas.addEventListener('keydown', modifierListener);
-                WL.canvas.addEventListener('keyup', modifierListener);
+                WL.canvas.addEventListener('keydown', event => {
+                    if(event.key === 'Shift')
+                        shift = true;
+                    if(event.key === 'Control')
+                        ctrl = true;
+                    if(event.key === 'Alt')
+                        alt = true;
+                });
+                WL.canvas.addEventListener('keyup', event => {
+                    if(event.key === 'Shift')
+                        shift = false;
+                    if(event.key === 'Control')
+                        ctrl = false;
+                    if(event.key === 'Alt')
+                        alt = false;
+                });
 
                 this.cursorTarget.addUnHoverFunction((_, cursor) => {
                     WLRoot.pointerDriver.leavePointer(
