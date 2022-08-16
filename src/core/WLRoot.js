@@ -161,6 +161,16 @@ export class WLRoot extends Root {
             }
 
             if(registerPointerDriver) {
+                let shift = false, ctrl = false, alt = false;
+                const modifierListener = function(event) {
+                    shift = event.shiftKey;
+                    ctrl = event.ctrlKey;
+                    alt = event.altKey;
+                }
+
+                WL.canvas.addEventListener('keydown', modifierListener);
+                WL.canvas.addEventListener('keyup', modifierListener);
+
                 this.cursorTarget.addUnHoverFunction((_, cursor) => {
                     WLRoot.pointerDriver.leavePointer(
                         this, WLRoot.getPointerID(cursor)
@@ -168,17 +178,17 @@ export class WLRoot extends Root {
                 });
                 this.cursorTarget.addMoveFunction((_, cursor) => {
                     WLRoot.pointerDriver.movePointer(
-                        this, WLRoot.getPointerID(cursor), ...getCursorPos(cursor), null, false, false, false
+                        this, WLRoot.getPointerID(cursor), ...getCursorPos(cursor), null, shift, ctrl, alt
                     );
                 });
                 this.cursorTarget.addDownFunction((_, cursor) => {
                     WLRoot.pointerDriver.movePointer(
-                        this, WLRoot.getPointerID(cursor), ...getCursorPos(cursor), 1, false, false, false
+                        this, WLRoot.getPointerID(cursor), ...getCursorPos(cursor), 1, shift, ctrl, alt
                     );
                 });
                 this.cursorTarget.addUpFunction((_, cursor) => {
                     WLRoot.pointerDriver.movePointer(
-                        this, WLRoot.getPointerID(cursor), ...getCursorPos(cursor), 0, false, false, false
+                        this, WLRoot.getPointerID(cursor), ...getCursorPos(cursor), 0, shift, ctrl, alt
                     );
                 });
             }
