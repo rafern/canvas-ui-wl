@@ -1,6 +1,22 @@
+import * as WL from '../../types/wonderland/wonderland';
 import { PointerHint } from '@rafern/canvas-ui';
 import { WLRoot } from '../core/WLRoot';
-/*global WL*/
+
+interface CanvasUIInputGuardComponent {
+    init(): void;
+    start(): void;
+    update(dt: number): void;
+    onDeactivate(): void;
+
+    pointer: number | null;
+    pointerComponent: WL.Component | null;
+    keyboardComponent: WL.Component | null;
+    keyboardObject: WL.Object;
+    pointerObject: WL.Object;
+    cursorObject: WL.Object;
+    keyboardComponentName: string;
+    pointerComponentName: string;
+}
 
 WL.registerComponent('canvas-ui-input-guard', {
     /** (optional) Name of component to disable if keyboard is in use */
@@ -13,7 +29,7 @@ WL.registerComponent('canvas-ui-input-guard', {
     pointerObject: {type: WL.Type.Object, default: null},
     /** (optional) Object which has a cursor component. Required if pointerObject is set, else, ignored */
     cursorObject: {type: WL.Type.Object, default:null},
-}, {
+}, <CanvasUIInputGuardComponent>{
     init() {
         this.pointer = null;
         this.pointerComponent = null;
@@ -22,7 +38,7 @@ WL.registerComponent('canvas-ui-input-guard', {
     start() {
         if(this.keyboardComponentName !== '') {
             if(this.keyboardObject !== null) {
-                const keyboardComponent = this.keyboardObject.getComponent(this.keyboardComponentName);
+                const keyboardComponent = this.keyboardObject.getComponent(this.keyboardComponentName, 0);
                 if(keyboardComponent === null)
                     console.warn('keyboardObject has no component with name', this.keyboardComponentName);
                 else
@@ -34,14 +50,14 @@ WL.registerComponent('canvas-ui-input-guard', {
 
         if(this.pointerComponentName !== '') {
             if(this.pointerObject !== null) {
-                const pointerComponent = this.pointerObject.getComponent(this.pointerComponentName);
+                const pointerComponent = this.pointerObject.getComponent(this.pointerComponentName, 0);
                 if(pointerComponent === null) {
                     console.warn('pointerObject has no component with name', this.pointerComponentName);
                     return;
                 }
 
                 if(this.cursorObject !== null) {
-                    const cursor = this.cursorObject.getComponent('cursor');
+                    const cursor = this.cursorObject.getComponent('cursor', 0);
                     if(cursor === null)
                         console.warn('cursorObject set in canvas-ui-keyboard-guard, but cursorObject has no cursor component');
                     else {
@@ -63,7 +79,7 @@ WL.registerComponent('canvas-ui-input-guard', {
             this.keyboardComponent.active = enable;
         }
 
-        if(this.pointer !== null) {
+        if(this.pointer !== null && this.pointerComponent !== null) {
             const enable = (WLRoot.pointerDriver.getPointerHint(this.pointer) === PointerHint.None);
             this.pointerComponent.active = enable;
         }
@@ -75,4 +91,4 @@ WL.registerComponent('canvas-ui-input-guard', {
         if(this.pointerComponent !== null)
             this.pointerComponent.active = true;
     },
-});
+} as unknown as WL.Component);

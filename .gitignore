@@ -2,3 +2,6 @@ package-lock.json
 *.sublime-project
 *.sublime-workspace
 node_modules/
+types/wonderland/**/*.ts
+types/wonderland/**/*.js
+types/wonderland/**/*.js.map

@@ -1,10 +1,22 @@
 import { WLVirtualKeyboardRoot } from '../core/WLVirtualKeyboardRoot';
-/*global WL*/
+import * as WL from '../../types/wonderland/wonderland';
+
+interface VirtualKeyboardUIRootComponent {
+    init(): void;
+    update(dt: number): void;
+    onActivate(): void;
+    onDeactivate(): void;
+
+    root: WLVirtualKeyboardRoot;
+    forceDisabled: boolean;
+    object: WL.Object;
+    material: WL.Material;
+}
 
 WL.registerComponent('virtual-keyboard-ui-root', {
     /** Material to apply the canvas texture to */
     material: {type: WL.Type.Material},
-}, {
+}, <VirtualKeyboardUIRootComponent>{
     init() {
         this.root = new WLVirtualKeyboardRoot(this.object, this.material);
         this.forceDisabled = false;
@@ -27,4 +39,4 @@ WL.registerComponent('virtual-keyboard-ui-root', {
             this.root.enabled = false;
         }
     },
-});
+} as unknown as WL.Component);

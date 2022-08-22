@@ -5,10 +5,12 @@
   "main": "./lib/index.esm.js",
   "exports": "./lib/index.esm.js",
   "scripts": {
-    "lint": "eslint . --ext .js",
-    "build": "esbuild src/index.js --bundle --minify --sourcemap --target=es6 --format=esm --external:@rafern/canvas-ui --external:gl-matrix --outfile=lib/index.esm.js",
+    "lint": "eslint . --ext .ts",
+    "build": "tsc && node node-scripts/esbuild.mjs",
+    "build_esbuild": "esbuild src/index.ts --bundle --minify --sourcemap --target=es6 --format=esm --external:@rafern/canvas-ui --external:gl-matrix \"--external:./types/*\" --outfile=lib/index.esm.js",
     "docs": "jsdoc -c ./.jsdoc.conf.json",
-    "clean": "rimraf lib/*"
+    "clean": "rimraf lib/*",
+    "gen_wle_types": "node node-scripts/sourcemap-to-js.js types/wonderland/wonderland.min.js.map && tsc types/wonderland/index.js --declaration --allowJs --emitDeclarationOnly"
   },
   "files": [
     "lib",
@@ -27,14 +29,19 @@
     "url": "https://github.com/rafern/canvas-ui-wl.git"
   },
   "devDependencies": {
+    "@rafern/canvas-ui-typedoc-resolver": "^1.0.0",
     "esbuild": "^0.14.54",
     "eslint": "^8.21.0",
     "gl-matrix": "^3.3.0",
     "jsdoc": "^3.6.11",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "typescript": "^4.7.4"
   },
   "peerDependencies": {
-    "@rafern/canvas-ui": ">= 4.0.0-rc7 < 5",
+    "@rafern/canvas-ui": ">= 4.0.0 < 5",
     "gl-matrix": "3.x"
+  },
+  "dependencies": {
+    "tslib": "^2.4.0"
   }
 }

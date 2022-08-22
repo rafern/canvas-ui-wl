@@ -1,5 +1,13 @@
 import { VirtualKeyboard, defaultVirtualKeyboardTemplate, Margin } from '@rafern/canvas-ui';
+import type { VirtualKeyboardRootProperties, KeyboardDriver } from '@rafern/canvas-ui';
+import * as WL from '../../types/wonderland/wonderland';
+import type { WLRootProperties } from './WLRoot';
 import { WLRoot } from './WLRoot';
+
+interface WLVirtualKeyboardRootProperties extends VirtualKeyboardRootProperties, WLRootProperties {
+    /** The KeyboardDriver to dispatch key events to. If null (default), WLRoot.keyboardDriver is used. */
+    keyboardDriver?: KeyboardDriver,
+}
 
 /**
  * A WLRoot with a virtual keyboard, similar to VirtualKeyboardRoot from
@@ -9,15 +17,16 @@ import { WLRoot } from './WLRoot';
  * @alias module:WLVirtualKeyboardRoot
  */
 export class WLVirtualKeyboardRoot extends WLRoot {
+    /** The {@link KeyboardDriver} used by this root's virtual keyboard. */
+    private readonly keyboardDriver: KeyboardDriver;
+
     /**
      * Create a new WLVirtualKeyboardRoot.
-     * @param {Object} wlObject The object where the mesh will be added.
-     * @param {Material} material The material to use for this root's mesh. The material will be cloned.
-     * @param {Object} [properties] An object containing all optional properties for this Root. Can have all properties from canvas-ui's VirtualKeyboardRootProperties interface and {@link WLRoot}'s properties constructor argument.
-     * @param {KeyboardDriver | null} [properties.keyboardDriver=null] The KeyboardDriver to dispatch key events to. If null (default), WLRoot.keyboardDriver is used.
+     * @param wlObject The object where the mesh will be added.
+     * @param material The material to use for this root's mesh. The material will be cloned.
      * @constructor
      */
-    constructor(wlObject, material, properties) {
+    constructor(wlObject: WL.Object, material: WL.Material, properties?: WLVirtualKeyboardRootProperties) {
         const keyboardDriver = properties?.keyboardDriver ?? WLRoot.keyboardDriver;
 
         super(
@@ -31,6 +40,7 @@ export class WLVirtualKeyboardRoot extends WLRoot {
             ),
             properties
         );
+
         this.keyboardDriver = keyboardDriver;
     }
 
