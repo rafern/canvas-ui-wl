@@ -4,6 +4,9 @@
     "target": "es6",
     "module": "es6",
     "lib": ["ESNext", "dom"],
+    "paths": {
+      "@wonderlandengine/api": ["./types/wonderland/wonderland"]
+    },
     "sourceMap": true,
     "strict": true,
     "strictFunctionTypes": true,
@@ -20,8 +23,9 @@
     "noImplicitOverride": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
+    "allowJs": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "lib", "**/*.test.ts", "types"]
+  "exclude": ["node_modules", "lib", "types"]
 }

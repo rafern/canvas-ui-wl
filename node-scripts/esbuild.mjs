@@ -7,5 +7,5 @@ import('esbuild').then(esbuild => esbuild.build({
     logLevel: 'info',
     entryPoints: [ './src/index.ts' ],
     outfile: './lib/index.esm.js',
-    external: [ '@rafern/canvas-ui', 'gl-matrix' ]
+    external: [ '@rafern/canvas-ui', 'gl-matrix', '@wonderlandengine/api' ]
 }).catch(() => process.exit(1)));

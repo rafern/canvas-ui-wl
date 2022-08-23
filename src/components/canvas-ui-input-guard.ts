@@ -1,4 +1,4 @@
-import * as WL from '../../types/wonderland/wonderland';
+/// <reference path="../../types/wonderland/wonderland.min.js" />
 import { PointerHint } from '@rafern/canvas-ui';
 import { WLRoot } from '../core/WLRoot';
 

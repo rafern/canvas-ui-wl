@@ -1,0 +1,4 @@
+import * as WL from './wonderland/wonderland';
+
+export = WL;
+export as namespace WL;

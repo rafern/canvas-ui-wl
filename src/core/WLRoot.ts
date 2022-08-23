@@ -1,6 +1,6 @@
+/// <reference path="../../types/wonderland/wonderland.min.js" />
 import { Root, PointerDriver, DOMKeyboardDriver } from '@rafern/canvas-ui';
 import type { Widget, RootProperties } from '@rafern/canvas-ui';
-import * as WL from '../../types/wonderland/wonderland';
 import { vec3, quat } from 'gl-matrix';
 
 // Drivers shared by all UI roots. For some reason, setting up the drivers here

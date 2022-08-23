@@ -1,5 +1,5 @@
+/// <reference path="../../types/wonderland/wonderland.min.js" />
 import { WLVirtualKeyboardRoot } from '../core/WLVirtualKeyboardRoot';
-import * as WL from '../../types/wonderland/wonderland';
 
 interface VirtualKeyboardUIRootComponent {
     init(): void;
