@@ -1,8 +1,13 @@
+/// <reference path="../../types/globals.d.ts" />
 import type { VirtualKeyboardRootProperties, KeyboardDriver } from '@rafern/canvas-ui';
-import * as WL from '../../types/wonderland/wonderland';
 import type { WLRootProperties } from './WLRoot';
 import { WLRoot } from './WLRoot';
-interface WLVirtualKeyboardRootProperties extends VirtualKeyboardRootProperties, WLRootProperties {
+/**
+ * Optional WLVirtualKeyboardRoot constructor properties.
+ *
+ * @category Core
+ */
+export interface WLVirtualKeyboardRootProperties extends VirtualKeyboardRootProperties, WLRootProperties {
     /** The KeyboardDriver to dispatch key events to. If null (default), WLRoot.keyboardDriver is used. */
     keyboardDriver?: KeyboardDriver;
 }
@@ -29,4 +34,3 @@ export declare class WLVirtualKeyboardRoot extends WLRoot {
      */
     updateVisibility(): void;
 }
-export {};

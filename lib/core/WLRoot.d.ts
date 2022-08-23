@@ -1,6 +1,6 @@
+/// <reference path="../../types/globals.d.ts" />
 import { Root, PointerDriver, DOMKeyboardDriver } from '@rafern/canvas-ui';
 import type { Widget, RootProperties } from '@rafern/canvas-ui';
-import * as WL from '../../types/wonderland/wonderland';
 /** Impostor interface for the `cursor` WLE component. */
 interface CursorComponent {
     rayHit: WL.RayHit;

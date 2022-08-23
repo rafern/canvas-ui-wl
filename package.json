@@ -1,6 +1,6 @@
 {
   "name": "@rafern/canvas-ui-wl",
-  "version": "2.0.0-rc1",
+  "version": "2.0.0-rc2",
   "description": "A Typescript UI library which uses HTML canvases - Wonderland Engine integration",
   "main": "./lib/index.esm.js",
   "exports": "./lib/index.esm.js",
@@ -8,15 +8,11 @@
   "scripts": {
     "lint": "eslint . --ext .ts",
     "build": "tsc && node node-scripts/esbuild.mjs",
-    "build_esbuild": "esbuild src/index.ts --bundle --minify --sourcemap --target=es6 --format=esm --external:@rafern/canvas-ui --external:gl-matrix \"--external:./types/*\" --outfile=lib/index.esm.js",
-    "docs": "jsdoc -c ./.jsdoc.conf.json",
+    "docs": "typedoc --options typedoc.json",
     "clean": "rimraf lib/*",
     "gen_wle_types": "node node-scripts/sourcemap-to-js.js types/wonderland/wonderland.min.js.map && tsc types/wonderland/index.js --declaration --allowJs --emitDeclarationOnly"
   },
-  "files": [
-    "lib",
-    "package.json"
-  ],
+  "files": [ "lib" ],
   "keywords": [
     "ui",
     "typescript",
@@ -31,11 +27,14 @@
   },
   "devDependencies": {
     "@rafern/canvas-ui-typedoc-resolver": "^1.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.34.0",
+    "@typescript-eslint/parser": "^5.34.0",
     "esbuild": "^0.14.54",
     "eslint": "^8.21.0",
+    "eslint-plugin-tsdoc": "^0.2.16",
     "gl-matrix": "^3.3.0",
-    "jsdoc": "^3.6.11",
     "rimraf": "^3.0.2",
+    "typedoc": "^0.23.10",
     "typescript": "^4.7.4"
   },
   "peerDependencies": {

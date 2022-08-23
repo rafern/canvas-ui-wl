@@ -19,9 +19,9 @@ Documentation for canvas-ui is available in the
 ## Build
 
 To build `canvas-ui-wl`, the type definitions for the Wonderland Engine API must
-first be generated (the `types/wonderland.d.ts` file):
+first be generated (the `types/wonderland/wonderland.d.ts` file):
 
-1. Grab a copy of the `wonderland.min.js` file from a Wonderland Editor project's `deploy` folder.
+1. Grab a copy of the `wonderland.min.js` file from a Wonderland Editor project's `deploy` folder and put it inside `types/wonderland`.
 2. Run `npm run gen_wle_types`.
 
 The type definition generation only needs to be done once (or when there is a
