@@ -23,8 +23,7 @@
     "noImplicitOverride": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
-    "emitDeclarationOnly": true,
-    "allowJs": true
+    "emitDeclarationOnly": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "lib", "types"]
