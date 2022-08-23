@@ -4,6 +4,7 @@
   "description": "A Typescript UI library which uses HTML canvases - Wonderland Engine integration",
   "main": "./lib/index.esm.js",
   "exports": "./lib/index.esm.js",
+  "types": "./lib/index.d.ts",
   "scripts": {
     "lint": "eslint . --ext .ts",
     "build": "tsc && node node-scripts/esbuild.mjs",

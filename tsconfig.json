@@ -5,7 +5,7 @@
     "module": "es6",
     "lib": ["ESNext", "dom"],
     "paths": {
-      "@wonderlandengine/api": ["./types/wonderland/wonderland"]
+      "@wonderlandengine/api": ["./types/wonderland/wonderland.d.ts"]
     },
     "sourceMap": true,
     "strict": true,
