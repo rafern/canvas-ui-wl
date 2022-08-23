@@ -1,4 +1,4 @@
-/// <reference path="../../types/wonderland/wonderland.min.js" />
+/// <reference path="../../types/globals.d.ts" />
 import { Root, PointerDriver, DOMKeyboardDriver } from '@rafern/canvas-ui';
 import type { Widget, RootProperties } from '@rafern/canvas-ui';
 import { vec3, quat } from 'gl-matrix';

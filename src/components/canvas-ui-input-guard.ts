@@ -1,4 +1,4 @@
-/// <reference path="../../types/wonderland/wonderland.min.js" />
+/// <reference path="../../types/globals.d.ts" />
 import { PointerHint } from '@rafern/canvas-ui';
 import { WLRoot } from '../core/WLRoot';
 

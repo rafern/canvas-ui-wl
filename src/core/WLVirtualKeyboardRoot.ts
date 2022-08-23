@@ -1,4 +1,4 @@
-/// <reference path="../../types/wonderland/wonderland.min.js" />
+/// <reference path="../../types/globals.d.ts" />
 import { VirtualKeyboard, defaultVirtualKeyboardTemplate, Margin } from '@rafern/canvas-ui';
 import type { VirtualKeyboardRootProperties, KeyboardDriver } from '@rafern/canvas-ui';
 import type { WLRootProperties } from './WLRoot';
