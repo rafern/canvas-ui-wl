@@ -113,8 +113,6 @@ export declare class WLRoot extends Root {
      * individual Root update methods.
      */
     update(): void;
-    private _setVertex;
-    private _setUV;
     private _setupMesh;
     destroy(): void;
 }

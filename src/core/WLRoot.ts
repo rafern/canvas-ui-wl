@@ -374,33 +374,36 @@ export class WLRoot extends Root {
             console.warn('There is no texture to update! Is the canvas dimensionless?');
     }
 
-    private _setVertex(vertexData: Float32Array, i: number, posX: number, posY: number, posZ: number, normX: number, normY: number, normZ: number, u: number, v: number) {
-        vertexData.set([posX, posY, posZ, u, v, normX, normY, normZ], i * WL.Mesh.VERTEX_FLOAT_SIZE);
-    }
-
-    private _setUV(vertexData: Float32Array, i: number, u: number, v: number) {
-        vertexData.set([u, v], i * WL.Mesh.VERTEX_FLOAT_SIZE + WL.Mesh.TEXCOORD.U);
-    }
-
     private _setupMesh(u: number, v: number) {
-        const indexData = new Uint8Array([
-            0, 3, 1, // top-right triangle
-            0, 2, 3, // bottom-left triangle
-        ]);
-        const vertexData = new Float32Array(4 * WL.Mesh.VERTEX_FLOAT_SIZE);
-        this._setVertex(vertexData, 0, -1,  1, 0, 0, 0, 1, 0, 1); // top-left
-        this._setVertex(vertexData, 1,  1,  1, 0, 0, 0, 1, u, 1); // top-right
-        this._setVertex(vertexData, 2, -1, -1, 0, 0, 0, 1, 0, v); // bottom-left
-        this._setVertex(vertexData, 3,  1, -1, 0, 0, 0, 1, u, v); // bottom-right
-
         const newMesh = new WL.Mesh({
-            // FIXME typescript shenanigans - remove typecasts when fixed official d.ts is available
-            indexData: (indexData as unknown as number[]),
+            indexData: new Uint8Array([
+                0, 3, 1, // top-right triangle
+                0, 2, 3, // bottom-left triangle
+            ]),
             indexType: WL.MeshIndexType.UnsignedByte,
-            // FIXME typescript shenanigans - remove typecasts when fixed official d.ts is available
-            vertexData: (vertexData as unknown as number[]),
             vertexCount: 4,
         });
+
+        const positions = newMesh.attributes(WL.MeshAttribute.Position);
+        const normals = newMesh.attributes(WL.MeshAttribute.Normals);
+        const texCoords = newMesh.attributes(WL.MeshAttribute.TextureCoordinate);
+
+        // top-left
+        positions.set(0, [-1, 1, 0]);
+          normals.set(0, [0, 0, 1]);
+        texCoords.set(0, [0, 1]);
+        // top-right
+        positions.set(1, [1, 1, 0]);
+          normals.set(1, [0, 0, 1]);
+        texCoords.set(1, [u, 1]);
+        // bottom-left
+        positions.set(2, [-1, -1, 0]);
+          normals.set(2, [0, 0, 1]);
+        texCoords.set(2, [0, v]);
+        // bottom-right
+        positions.set(3, [1, -1, 0]);
+          normals.set(3, [0, 0, 1]);
+        texCoords.set(3, [u, v]);
 
         (this.meshComponent as WL.MeshComponent).mesh = newMesh;
 
