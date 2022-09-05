@@ -12,7 +12,7 @@ Documentation for canvas-ui is available in the
 
 1. Install the canvas-ui NPM package: `npm install --save-dev @rafern/canvas-ui`
 2. Install this NPM package: `npm install --save-dev @rafern/canvas-ui-wl`
-3. `require` `@rafern/canvas-ui` and `@rafern/canvas-ui-wl` in your bundle script
+3. Import needed classes from `@rafern/canvas-ui` and `@rafern/canvas-ui-wl` in your code
 4. Create a new component for your UI root ([see examples section](#Examples))
 5. Set the material to use for your UI root component to a textured material. If you want a semi-transparent background, create a new pipeline with alpha blending enabled
 
@@ -47,6 +47,9 @@ works for now and only needs to be done once (or when the API changes).
     // ...
 }
 ```
+
+After generating the file once, the regular build method can be used
+(`npm run build`).
 
 **Contributions with generated `wonderland.d.ts` or any nightly Wonderland
 Engine file will be rejected. Nightlies are not meant to be redistributed.**
