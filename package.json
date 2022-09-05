@@ -1,6 +1,6 @@
 {
   "name": "@rafern/canvas-ui-wl",
-  "version": "2.0.0-rc3",
+  "version": "2.0.0",
   "description": "A Typescript UI library which uses HTML canvases - Wonderland Engine integration",
   "main": "./lib/index.esm.js",
   "exports": "./lib/index.esm.js",

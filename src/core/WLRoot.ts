@@ -384,9 +384,9 @@ export class WLRoot extends Root {
             vertexCount: 4,
         });
 
-        const positions = newMesh.attributes(WL.MeshAttribute.Position);
-        const normals = newMesh.attributes(WL.MeshAttribute.Normals);
-        const texCoords = newMesh.attributes(WL.MeshAttribute.TextureCoordinate);
+        const positions = newMesh.attribute(WL.MeshAttribute.Position);
+        const normals = newMesh.attribute(WL.MeshAttribute.Normal);
+        const texCoords = newMesh.attribute(WL.MeshAttribute.TextureCoordinate);
 
         // top-left
         positions.set(0, [-1, 1, 0]);
