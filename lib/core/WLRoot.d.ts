@@ -16,6 +16,7 @@ interface CursorTargetComponent {
     removeDownFunction(callback: (object: WL.Object, cursor: CursorComponent) => void): void;
     removeUpFunction(callback: (object: WL.Object, cursor: CursorComponent) => void): void;
     destroy(): void;
+    active: boolean;
 }
 /**
  * Optional WLRoot constructor properties.
@@ -83,6 +84,7 @@ export declare class WLRoot extends Root {
     collision: WL.CollisionComponent | null;
     cursorTarget: CursorTargetComponent | null;
     protected valid: boolean;
+    protected paintedOnce: boolean;
     private keydownEventListener;
     private keyupEventListener;
     private unHoverFunction;
@@ -113,6 +115,8 @@ export declare class WLRoot extends Root {
      * individual Root update methods.
      */
     update(): void;
+    set enabled(enabled: boolean);
+    get enabled(): boolean;
     private _setupMesh;
     destroy(): void;
 }

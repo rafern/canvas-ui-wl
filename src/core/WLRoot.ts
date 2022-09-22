@@ -28,6 +28,7 @@ interface CursorTargetComponent {
     removeDownFunction(callback: (object: WL.Object, cursor: CursorComponent) => void): void,
     removeUpFunction(callback: (object: WL.Object, cursor: CursorComponent) => void): void,
     destroy(): void,
+    active: boolean,
 }
 
 /** Impostor interface for WL.Materials with a flatTexture property. */
@@ -139,6 +140,7 @@ export class WLRoot extends Root {
     cursorTarget: CursorTargetComponent | null = null;
 
     protected valid = false;
+    protected paintedOnce = false;
     private keydownEventListener: ((event: KeyboardEvent) => void) | null = null;
     private keyupEventListener: ((event: KeyboardEvent) => void) | null = null;
     private unHoverFunction: ((object: WL.Object, cursor: CursorComponent) => void) | null = null;
@@ -190,6 +192,7 @@ export class WLRoot extends Root {
 
         // Setup mesh for rendering in world
         this.meshComponent = this.meshObject.addComponent('mesh') as WL.MeshComponent;
+        this.meshComponent.active = false;
 
         // keep clone as a variable instead of accessing it later via
         // this.meshComponent.material because mesh's material setter wraps the material,
@@ -205,9 +208,11 @@ export class WLRoot extends Root {
                 extents: [1, 1, 0.01],
                 group: 1 << collisionGroup,
             }) as WL.CollisionComponent;
+            this.collision.active = false;
 
             // FIXME typescript shenanigans - remove typecasts when fixed official d.ts is available
             this.cursorTarget = this.meshObject.addComponent('cursor-target') as unknown as CursorTargetComponent;
+            this.cursorTarget.active = false;
 
             const cursorPos = new Float32Array(3);
             const pos = new Float32Array(3);
@@ -299,7 +304,7 @@ export class WLRoot extends Root {
      * individual Root update methods.
      */
     update() {
-        if(!this.valid)
+        if(!this.valid || !this._enabled)
             return;
 
         // We know that this is `valid` and hence not null, typecast
@@ -341,8 +346,10 @@ export class WLRoot extends Root {
         // Paint
         const wasDirty = this.paint();
 
-        // Enable child object if the canvas is enabled
-        meshObject.active = this.enabled;
+        if(!this.paintedOnce) {
+            this.paintedOnce = true;
+            meshObject.active = true;
+        }
 
         if(!wasDirty)
             return;
@@ -372,6 +379,17 @@ export class WLRoot extends Root {
         }
         else
             console.warn('There is no texture to update! Is the canvas dimensionless?');
+    }
+
+    override set enabled(enabled: boolean) {
+        super.enabled = enabled;
+
+        if(this.paintedOnce)
+            (this.meshObject as WL.Object).active = this.enabled;
+    }
+
+    override get enabled(): boolean {
+        return super.enabled;
     }
 
     private _setupMesh(u: number, v: number) {
