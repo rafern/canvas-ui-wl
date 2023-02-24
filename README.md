@@ -1,3 +1,7 @@
+# WARNING
+
+This library has been renamed to `lazy-widgets-wle` due to a name clash. The new library can be found [here](https://github.com/rafern/lazy-widgets-wle).
+
 # canvas-ui-wl
 
 [Wonderland Engine](https://wonderlandengine.com/) integration for the
